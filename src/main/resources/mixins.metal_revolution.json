@@ -1,0 +1,11 @@
+{
+  "package": "com.circulation.metal_revolution.mixins",
+  "refmap": "mixins.m3t.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+  ],
+  "mixins": [
+  ]
+}
