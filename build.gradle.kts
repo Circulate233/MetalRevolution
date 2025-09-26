@@ -110,7 +110,12 @@ dependencies {
     api(pluginDep("org.jetbrains.kotlin.jvm", "2.1.0"))
     api(pluginDep("org.jetbrains.kotlin.kapt", "2.1.0"))
     api(pluginDep("com.google.devtools.ksp", "2.1.0-1.0.29"))
-    api(pluginDep("org.ajoberstar.grgit", "4.1.1")) // 4.1.1 is the last jvm8 supporting version, unused, available for addon.gradle
+    api(
+        pluginDep(
+            "org.ajoberstar.grgit",
+            "4.1.1"
+        )
+    ) // 4.1.1 is the last jvm8 supporting version, unused, available for addon.gradle
     api(pluginDep("de.undercouch.download", "5.6.0"))
     api(pluginDep("com.github.gmazzo.buildconfig", "3.1.0")) // Unused, available for addon.gradle
     api(pluginDep("com.modrinth.minotaur", "2.8.7"))
@@ -118,20 +123,31 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    compileOnly("org.projectlombok:lombok:1.18.24")
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
 
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
-    val mixin : String = modUtils.enableMixins("curse.maven:!unimixins-826970:6953804", "mixins.metal_revolution.refmap.json").toString()
-    api (mixin) {
+    val mixin: String =
+        modUtils.enableMixins("curse.maven:!unimixins-826970:6953804", "mixins.metal_revolution.refmap.json").toString()
+    api(mixin) {
         isTransitive = false
     }
 
+    implementation("com.github.GTNewHorizons:GTNHLib:0.6.39:dev") {
+        isTransitive = false
+    }
     implementation(rfg.deobf("curse.maven:muya1-7-10-530214:4364097"))
     implementation(rfg.deobf("curse.maven:manametal-531708:6943759"))
-    implementation(rfg.deobf("curse.maven:notenoughitems-gtnh-358228:6171985"))
-    implementation(rfg.deobf("curse.maven:codechickencore-unofficial-746279:6070102"))
+    implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.7:dev") {
+        isTransitive = false
+    }
+    implementation("com.github.GTNewHorizons:NotEnoughItems:2.7.89-GTNH:dev") {
+        isTransitive = false
+    }
     implementation(rfg.deobf("curse.maven:smooth-285742:2614474"))
     implementation(rfg.deobf("curse.maven:forge-nbtedit-for-1-7-10-381388:2949679"))
+    runtimeOnly(rfg.deobf("curse.maven:trivialthoughts-967327:6971415"))
 }
 
 gradlePlugin {

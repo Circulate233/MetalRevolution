@@ -3,10 +3,10 @@ package com.circulation.metal_revolution.mixins;
 import cpw.mods.fml.common.Loader;
 import io.github.tox1cozz.mixinbooterlegacy.ILateMixinLoader;
 import io.github.tox1cozz.mixinbooterlegacy.LateMixin;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
@@ -15,15 +15,16 @@ import java.util.function.BooleanSupplier;
 @LateMixin
 public class LateMixinLoader implements ILateMixinLoader {
 
-    private static final Map<String, BooleanSupplier> MIXIN_CONFIGS = new LinkedHashMap<>();
+    private static final Map<String, BooleanSupplier> MIXIN_CONFIGS = new Object2ObjectLinkedOpenHashMap<>();
 
     static {
         addMixinCFG("mixins.metal_revolution.json");
+        addModdedMixinCFG("mixins.metal_revolution.nei.json", "NotEnoughItems");
     }
 
     @Override
     public List<String> getMixinConfigs() {
-        return new ArrayList<>(MIXIN_CONFIGS.keySet());
+        return new ObjectArrayList<>(MIXIN_CONFIGS.keySet());
     }
 
     @Override

@@ -1,0 +1,10 @@
+{
+  "package": "com.circulation.metal_revolution.mixins.MMM.nei",
+  "refmap": "mixins.metal_revolution.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinNEITileEntityTileBase"
+  ]
+}
