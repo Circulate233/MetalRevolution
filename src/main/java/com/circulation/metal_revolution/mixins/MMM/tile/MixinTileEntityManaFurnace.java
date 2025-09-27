@@ -41,7 +41,7 @@ public abstract class MixinTileEntityManaFurnace extends TileEntity implements I
      * @reason 覆写
      */
     @Overwrite(remap = true)
-    public boolean isItemValidForSlot(int slot, ItemStack stack) {
+    public boolean canInsertItem(int slot, ItemStack stack, int side) {
         return m$valid[slot].getBoolean(stack);
     }
 

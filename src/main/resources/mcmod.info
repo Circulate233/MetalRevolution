@@ -1,7 +1,7 @@
 [
   {
-    "modid": "m3t",
-    "name": "M3 Tweaker",
+    "modid": "metal_revolution",
+    "name": "Metal Revolution",
     "description": "",
     "version": "${modVersion}",
     "mcversion": "1.7.10",

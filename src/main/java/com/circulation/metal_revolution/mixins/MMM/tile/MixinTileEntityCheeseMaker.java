@@ -11,13 +11,13 @@ import org.spongepowered.asm.mixin.Unique;
 import project.studio.manametalmod.items.crafting.ManaFurnaceRecipes;
 import project.studio.manametalmod.tileentity.TileEntityCheeseMaker;
 
-@Mixin(value = TileEntityCheeseMaker.class,remap = false)
+@Mixin(TileEntityCheeseMaker.class)
 public abstract class MixinTileEntityCheeseMaker extends TileEntity implements ISidedInventory {
 
     @Unique
     private static final int[] m$AllSlot = {0, 1, 2};
 
-    @Shadow
+    @Shadow(remap = false)
     public static boolean isItemMilk(ItemStack itemStack) {
         return true;
     }
@@ -41,7 +41,7 @@ public abstract class MixinTileEntityCheeseMaker extends TileEntity implements I
      * @author circulation
      * @reason 覆写
      */
-    @Overwrite(remap = true)
+    @Overwrite
     public int[] getAccessibleSlotsFromSide(int side) {
         return m$AllSlot;
     }
@@ -50,16 +50,7 @@ public abstract class MixinTileEntityCheeseMaker extends TileEntity implements I
      * @author circulation
      * @reason 覆写
      */
-    @Overwrite(remap = true)
-    public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        return m$inputValid[slot].getBoolean(stack);
-    }
-
-    /**
-     * @author circulation
-     * @reason 覆写
-     */
-    @Overwrite(remap = true)
+    @Overwrite
     public boolean canInsertItem(int slot, ItemStack item, int side) {
         return m$inputValid[slot].getBoolean(item);
     }
@@ -68,17 +59,8 @@ public abstract class MixinTileEntityCheeseMaker extends TileEntity implements I
      * @author circulation
      * @reason 覆写
      */
-    @Overwrite(remap = true)
+    @Overwrite
     public boolean canExtractItem(int slot, ItemStack item, int side) {
         return m$outputValid[slot].getBoolean(item);
-    }
-
-    /**
-     * @author circulation
-     * @reason 覆写
-     */
-    @Overwrite(remap = true)
-    public int getSizeInventory() {
-        return 3;
     }
 }

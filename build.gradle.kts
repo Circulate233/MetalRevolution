@@ -15,8 +15,7 @@ plugins {
 val gitVersion: groovy.lang.Closure<String> by extra
 
 group = "com.circulation.metal_revolution"
-val detectedVersion: String = "1.0.0"
-version = detectedVersion
+version = "1.0.0"
 
 // Add a source set for the functional test suite
 val functionalTestSourceSet = sourceSets.create("functionalTest") {}
@@ -205,7 +204,7 @@ gradlePlugin {
 buildConfig {
     useJavaOutput()
     this.packageName = "com.circulation.metal_revolution"
-    buildConfigField("VERSION", detectedVersion)
+    buildConfigField("VERSION", version.toString())
 }
 
 // Enable Jabel for java 8 bytecode from java 17 sources
