@@ -5,8 +5,11 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "client": [
+    "gui.MixinGuiMetalSeparator"
   ],
   "mixins": [
+    "container.MixinContainerMetalSeparator",
+    "MixinItemMetalEnergy",
     "MixinMMM",
     "recipe.crafting.MixinAlloyFurnaceRecipes",
     "recipe.crafting.MixinBedrockCrusherRecipes",
@@ -29,6 +32,8 @@
     "tile.MixinTileEntityBase",
     "tile.MixinTileEntityCheeseMaker",
     "tile.MixinTileEntityEXPExtractor",
-    "tile.MixinTileEntityManaFurnace"
+    "tile.MixinTileEntityManaCraftTable",
+    "tile.MixinTileEntityManaFurnace",
+    "tile.MixinTileEntityMetalSeparator"
   ]
 }

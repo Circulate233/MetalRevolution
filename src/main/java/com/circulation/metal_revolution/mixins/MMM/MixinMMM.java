@@ -1,5 +1,7 @@
 package com.circulation.metal_revolution.mixins.MMM;
 
+import com.circulation.metal_revolution.utils.MInitUtil;
+import com.circulation.metal_revolution.utils.MRUtil;
 import com.circulation.metal_revolution.utils.SimpleItem;
 import cpw.mods.fml.common.ModAPIManager;
 import cpw.mods.fml.common.registry.GameData;
@@ -18,29 +20,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import project.studio.manametalmod.MMM;
-import project.studio.manametalmod.ManaMetalMod;
-import project.studio.manametalmod.itemAndBlockCraft.ItemCraft10;
 
 @Mixin(value = MMM.class,remap = false,priority = 999)
 public class MixinMMM {
 
     @Unique
-    private static final Reference2IntMap<Item> m$maneItemFuelMap = Reference2IntMaps.synchronize(new Reference2IntOpenHashMap<>());
-
-    static {
-        m$addManeFuel(ManaMetalMod.dustMana, 50);
-        m$addManeFuel(ManaMetalMod.ingotMana, 450);
-        m$addManeFuel(ManaMetalMod.dustSmallMana, 5);
-        m$addManeFuel(Item.getItemFromBlock(ManaMetalMod.blockMana), 4050);
-        m$addManeFuel(ItemCraft10.BucketMana, 400);
-        m$addManeFuel(ItemCraft10.ItemMana, 100);
-        m$maneItemFuelMap.defaultReturnValue(0);
-    }
-
-    @Unique
-    private static void m$addManeFuel(Item item, int time) {
-        m$maneItemFuelMap.put(item, time);
-    }
+    private static final Reference2IntMap<Item> m$maneItemFuelMap = MInitUtil.maneItemFuelMap;
 
     /**
      * @author circulation
@@ -123,6 +108,19 @@ public class MixinMMM {
     @Overwrite
     public static String getItemModid(Item stack) {
         String id = GameData.getItemRegistry().getNameForObject(stack);
-        return id == null ? "minecraft" : id.split(":",2)[0];
+        return id == null ? "minecraft" : id.split(":", 2)[0];
+    }
+
+    /**
+     * @author circulation
+     * @reason 测试性的查询方式
+     */
+    @Overwrite
+    public static int getItemMetalEnergy(ItemStack items) {
+        if (items != null && items.stackSize != 0) {
+            return MRUtil.metalMap.getInt(items.getItem());
+        } else {
+            return 0;
+        }
     }
 }

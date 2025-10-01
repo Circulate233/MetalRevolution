@@ -20,6 +20,7 @@ public class LateMixinLoader implements ILateMixinLoader {
     static {
         addMixinCFG("mixins.metal_revolution.json");
         addModdedMixinCFG("mixins.metal_revolution.nei.json", "NotEnoughItems");
+        addModdedMixinCFG("mixins.metal_revolution.trt.json", "trivialthoughts");
     }
 
     @Override

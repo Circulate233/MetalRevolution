@@ -146,7 +146,7 @@ dependencies {
     }
     implementation(rfg.deobf("curse.maven:smooth-285742:2614474"))
     implementation(rfg.deobf("curse.maven:forge-nbtedit-for-1-7-10-381388:2949679"))
-    runtimeOnly(rfg.deobf("curse.maven:trivialthoughts-967327:6971415"))
+    implementation(rfg.deobf("curse.maven:trivialthoughts-967327:6971415"))
 }
 
 gradlePlugin {
