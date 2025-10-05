@@ -8,7 +8,9 @@ public interface MRMetalSeparator {
 
     int m$getMaxEnergy();
 
-    void m$upOutSlot();
+    boolean m$upOutSlot();
+
+    boolean m$upSmallOutSlot();
 
     int m$getCache(int data);
 }

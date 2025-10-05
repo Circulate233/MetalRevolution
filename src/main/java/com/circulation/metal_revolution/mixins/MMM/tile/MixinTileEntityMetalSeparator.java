@@ -80,7 +80,7 @@ public abstract class MixinTileEntityMetalSeparator extends TileEntity implement
     @Overwrite
     public boolean canExtractItem(int slot, ItemStack item, int side) {
         boolean i = slot == 2 || slot == 3;
-        if (i && m$cacheEnergy >= 9){
+        if (i && m$cacheEnergy >= 9) {
             m$upOutSlot();
         }
         return i;
@@ -147,19 +147,42 @@ public abstract class MixinTileEntityMetalSeparator extends TileEntity implement
 
     @Unique
     @Override
-    public void m$upOutSlot() {
-        if (m$cacheEnergy < 9)return;
+    public boolean m$upOutSlot() {
+        if (m$cacheEnergy < 9) return false;
         int need;
         int max = this.getInventoryStackLimit();
         if (this.inventory[2] == null) {
             need = Math.min(64, m$cacheEnergy / 9);
             this.inventory[2] = new ItemStack(ManaMetalMod.MetalEnergy02, need);
             m$cacheEnergy -= need * 9;
+            return true;
         } else if (this.inventory[2].stackSize < 64) {
             need = Math.min(64 - this.inventory[2].stackSize, m$cacheEnergy / 9);
             this.inventory[2].stackSize += need;
             m$cacheEnergy -= need * 9;
+            return true;
         }
+        return false;
+    }
+
+    @Unique
+    @Override
+    public boolean m$upSmallOutSlot() {
+        if (m$cacheEnergy < 1) return false;
+        int need;
+        int max = this.getInventoryStackLimit();
+        if (this.inventory[3] == null) {
+            need = Math.min(64, m$cacheEnergy);
+            this.inventory[3] = new ItemStack(ManaMetalMod.MetalEnergy01, need);
+            m$cacheEnergy -= need;
+            return true;
+        } else if (this.inventory[3].stackSize < 64) {
+            need = Math.min(64 - this.inventory[3].stackSize, m$cacheEnergy);
+            this.inventory[3].stackSize += need;
+            m$cacheEnergy -= need;
+            return true;
+        }
+        return false;
     }
 
     @SideOnly(Side.CLIENT)

@@ -54,7 +54,22 @@ public abstract class MixinContainerMetalSeparator extends Container {
     @Intrinsic
     public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer player) {
         if (slotId == 2) {
-            ((MRMetalSeparator) this.te).m$upOutSlot();
+            MRMetalSeparator te = (MRMetalSeparator) this.te;
+            var o = super.slotClick(slotId, clickedButton, mode, player);
+            if (o == null){
+                if (te.m$upOutSlot()){
+                    o = super.slotClick(slotId, clickedButton, mode, player);
+                    te.m$upOutSlot();
+                }
+            } else {
+                te.m$upOutSlot();
+            }
+
+            return o;
+        }
+        if (slotId == 3) {
+            MRMetalSeparator te = (MRMetalSeparator) this.te;
+            te.m$upSmallOutSlot();
         }
         return super.slotClick(slotId, clickedButton, mode, player);
     }

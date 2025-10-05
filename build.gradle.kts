@@ -122,8 +122,6 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
 
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 

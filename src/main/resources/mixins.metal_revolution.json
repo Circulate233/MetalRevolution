@@ -5,12 +5,13 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "gui.MixinGuiMetalSeparator"
+    "gui.MixinGuiMetalSeparator",
+    "gui.MixinModGuiHandler"
   ],
   "mixins": [
-    "container.MixinContainerMetalSeparator",
     "MixinItemMetalEnergy",
     "MixinMMM",
+    "container.MixinContainerMetalSeparator",
     "recipe.crafting.MixinAlloyFurnaceRecipes",
     "recipe.crafting.MixinBedrockCrusherRecipes",
     "recipe.crafting.MixinCheeseMakerRecipes",

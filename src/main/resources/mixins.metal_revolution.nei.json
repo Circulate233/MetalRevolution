@@ -5,6 +5,14 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinManaGravityWellHandlerS",
+    "MixinNEICooktable",
+    "MixinNEIManaSewingMachine",
+    "MixinNEIManaSewingMachine$MixinSmeltingPair2",
+    "MixinNEIManaSpinningWheelS",
     "MixinNEITileEntityTileBase"
+  ],
+  "client": [
+    "MixinNEIOverlay"
   ]
 }
