@@ -16,9 +16,9 @@ public class MixinTileEntityManaCraftTable {
      * @author circulation
      * @reason 覆写
      */
-    @Overwrite()
+    @Overwrite
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
-        return side < 9;
+        return slot < 9;
     }
 
     /**

@@ -13,7 +13,7 @@ import project.studio.manametalmod.tileentity.TileEntityManaSFurnace;
 public class MixinTileEntityManaSFurnace {
 
     @Unique
-    private static final int[] m$AllSlot = {0, 1, 2,3,4};
+    private static final int[] m$AllSlot = {0, 1, 2, 3, 4};
 
     @Unique
     private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
