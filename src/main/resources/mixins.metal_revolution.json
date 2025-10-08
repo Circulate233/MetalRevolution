@@ -35,6 +35,9 @@
     "tile.MixinTileEntityEXPExtractor",
     "tile.MixinTileEntityManaCraftTable",
     "tile.MixinTileEntityManaFurnace",
+    "tile.MixinTileEntityManaMake1",
+    "tile.MixinTileEntityManaSF",
+    "tile.MixinTileEntityManaSFurnace",
     "tile.MixinTileEntityMetalSeparator"
   ]
 }
