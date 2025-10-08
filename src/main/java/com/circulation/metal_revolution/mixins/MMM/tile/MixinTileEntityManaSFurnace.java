@@ -19,11 +19,11 @@ public class MixinTileEntityManaSFurnace {
     private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
 
     static {
-        m$valid[0] = item -> ((ItemStack) item).getItem() == ManaMetalMod.MetalEnergy02;
+        m$valid[0] = item -> MMM.isStringFromArray(MMM.getItemOreDictionaryName((ItemStack) item), "ingotIron");
         m$valid[1] = item -> MMM.getManaItem((ItemStack) item);
         m$valid[2] = item -> false;
         m$valid[3] = item -> false;
-        m$valid[4] = item -> MMM.isStringFromArray(MMM.getItemOreDictionaryName((ItemStack) item), "ingotIron");
+        m$valid[4] = item -> ((ItemStack) item).getItem() == ManaMetalMod.MetalEnergy02;
     }
 
     /**

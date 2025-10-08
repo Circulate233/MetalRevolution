@@ -6,10 +6,8 @@ import com.circulation.metal_revolution.utils.SimpleItem;
 import cpw.mods.fml.common.ModAPIManager;
 import cpw.mods.fml.common.registry.GameData;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
-import it.unimi.dsi.fastutil.objects.Reference2IntMaps;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceMap;
-import it.unimi.dsi.fastutil.objects.Reference2ReferenceMaps;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,7 +39,11 @@ public class MixinMMM {
     }
 
     @Unique
-    private static final Reference2IntMap<SimpleItem> m$itemFuelMap = Reference2IntMaps.synchronize(new Reference2IntOpenHashMap<>());
+    private static final Reference2IntMap<SimpleItem> m$itemFuelMap = new Reference2IntOpenHashMap<>();
+
+    static {
+        m$itemFuelMap.defaultReturnValue(-1);
+    }
 
     /**
      * @author circulation
@@ -49,11 +51,19 @@ public class MixinMMM {
      */
     @Overwrite
     public static int getItemStackFuelValue(ItemStack items) {
-        return m$itemFuelMap.computeIfAbsent(SimpleItem.getInstance(items), s -> TileEntityFurnace.getItemBurnTime(items));
+        var key = SimpleItem.getInstance(items);
+        int out = m$itemFuelMap.getInt(key);
+        if (out < 0) {
+            out = TileEntityFurnace.getItemBurnTime(items);
+            synchronized (m$itemFuelMap) {
+                m$itemFuelMap.put(key, out);
+            }
+        }
+        return out;
     }
 
     @Unique
-    private static final Reference2ReferenceMap<SimpleItem, String[]> m$ODNameMap = Reference2ReferenceMaps.synchronize(new Reference2ReferenceOpenHashMap<>());
+    private static final Reference2ReferenceMap<SimpleItem, String[]> m$ODNameMap = new Reference2ReferenceOpenHashMap<>();
 
     /**
      * @author circulation
@@ -74,7 +84,9 @@ public class MixinMMM {
                         names[s] = OreDictionary.getOreName(ids[s]);
                     }
                 }
-                m$ODNameMap.put(si, names);
+                synchronized (m$ODNameMap) {
+                    m$ODNameMap.put(si, names);
+                }
             }
             if (names.length == 0) {
                 return null;
