@@ -33,11 +33,14 @@
     "tile.MixinTileEntityBase",
     "tile.MixinTileEntityCheeseMaker",
     "tile.MixinTileEntityEXPExtractor",
+    "tile.MixinTileEntityItemUseTable",
     "tile.MixinTileEntityManaCraftTable",
     "tile.MixinTileEntityManaFurnace",
     "tile.MixinTileEntityManaMake1",
     "tile.MixinTileEntityManaSF",
     "tile.MixinTileEntityManaSFurnace",
-    "tile.MixinTileEntityMetalSeparator"
+    "tile.MixinTileEntityMetalSeparator",
+    "tile.MixinTileEntityQualityTable",
+    "tile.MixinTileEntityWeaponScroll"
   ]
 }
