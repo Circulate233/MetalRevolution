@@ -12,7 +12,7 @@ import project.studio.manametalmod.items.crafting.ManaFurnaceRecipes;
 import project.studio.manametalmod.tileentity.TileEntityCheeseMaker;
 
 @Mixin(TileEntityCheeseMaker.class)
-public abstract class MixinTileEntityCheeseMaker extends TileEntity implements ISidedInventory {
+public abstract class MixinCheeseMaker extends TileEntity implements ISidedInventory {
 
     @Unique
     private static final int[] m$AllSlot = {0, 1, 2};

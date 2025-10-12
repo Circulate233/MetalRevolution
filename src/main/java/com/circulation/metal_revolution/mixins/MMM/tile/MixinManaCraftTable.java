@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Unique;
 import project.studio.manametalmod.tileentity.TileEntityManaCraftTable;
 
 @Mixin(TileEntityManaCraftTable.class)
-public class MixinTileEntityManaCraftTable {
+public class MixinManaCraftTable {
 
     @Unique
     private static final int[] m$AllSlot = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};

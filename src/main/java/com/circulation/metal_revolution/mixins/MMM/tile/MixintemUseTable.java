@@ -12,7 +12,7 @@ import project.studio.manametalmod.api.IEquipmentStrengthenItem;
 import project.studio.manametalmod.tileentity.TileEntityItemUseTable;
 
 @Mixin(TileEntityItemUseTable.class)
-public class MixinTileEntityItemUseTable {
+public class MixintemUseTable {
     @Unique
     private static final int[] m$AllSlot = {0, 1};
 

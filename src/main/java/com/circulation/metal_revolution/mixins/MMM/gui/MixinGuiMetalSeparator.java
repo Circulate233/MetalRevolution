@@ -1,6 +1,6 @@
 package com.circulation.metal_revolution.mixins.MMM.gui;
 
-import com.circulation.metal_revolution.iinterface.MRMetalSeparator;
+import com.circulation.metal_revolution.interfaces.MRMetalSeparator;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;

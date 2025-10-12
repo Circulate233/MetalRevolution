@@ -1,6 +1,6 @@
 package com.circulation.metal_revolution.mixins.MMM.container;
 
-import com.circulation.metal_revolution.iinterface.MRMetalSeparator;
+import com.circulation.metal_revolution.interfaces.MRMetalSeparator;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;

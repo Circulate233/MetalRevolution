@@ -1,6 +1,6 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
-import com.circulation.metal_revolution.iinterface.MRMetalSeparator;
+import com.circulation.metal_revolution.interfaces.MRMetalSeparator;
 import com.circulation.metal_revolution.utils.MRUtil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,18 +22,27 @@ import project.studio.manametalmod.items.crafting.MetalSeparatorRecipes;
 import project.studio.manametalmod.tileentity.TileEntityMetalSeparator;
 
 @Mixin(TileEntityMetalSeparator.class)
-public abstract class MixinTileEntityMetalSeparator extends TileEntity implements ISidedInventory,MRMetalSeparator {
+public abstract class MixinMetalSeparator extends TileEntity implements ISidedInventory,MRMetalSeparator {
 
     @Unique
     private int m$cacheEnergy;
 
     @Unique
-    private final int m$maxCacheEnergy = 10000;
+    private static final int m$maxCacheEnergy = 10000;
 
     @Unique
     @Override
     public int m$getEnergy() {
         return m$cacheEnergy;
+    }
+
+    @Unique
+    @Override
+    public void m$addEnergy(int enetgy) {
+        m$cacheEnergy += enetgy;
+        if (m$cacheEnergy > m$maxCacheEnergy){
+            m$cacheEnergy = m$maxCacheEnergy;
+        }
     }
 
     @Unique
@@ -105,7 +114,7 @@ public abstract class MixinTileEntityMetalSeparator extends TileEntity implement
             ItemStack itemstack = MetalSeparatorRecipes.smelting().getSmeltingResult(this.inventory[0]);
             final int energy = MRUtil.getStackMetalEnergy(itemstack) + 1;
 
-            m$cacheEnergy += energy;
+            m$addEnergy(energy);
             m$upOutSlot();
 
             --this.inventory[0].stackSize;

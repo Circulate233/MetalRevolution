@@ -14,7 +14,7 @@ import project.studio.manametalmod.magicenergy.IMagicEnergyUse;
 import project.studio.manametalmod.tileentity.TileEntityEXPExtractor;
 
 @Mixin(value = TileEntityEXPExtractor.class,remap = false)
-public abstract class MixinTileEntityEXPExtractor extends TileEntity implements ISidedInventory, IMagicEnergyUse {
+public abstract class MixinEXPExtractor extends TileEntity implements ISidedInventory, IMagicEnergyUse {
 
     @Unique
     private static final int[] m$AllSlot = {0, 1, 2};

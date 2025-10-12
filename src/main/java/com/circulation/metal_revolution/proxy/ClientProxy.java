@@ -23,6 +23,7 @@ import project.studio.manametalmod.nei.NEIManaSpinningWheel;
 
 import static project.studio.manametalmod.Lapuda.LapudaCore.LapudaFurnace;
 import static project.studio.manametalmod.ManaMetalMod.BLOCKManaSF;
+import static project.studio.manametalmod.ManaMetalMod.BLOCKMetalFurnace;
 import static project.studio.manametalmod.ManaMetalMod.BLOCKTimeFurnace;
 import static project.studio.manametalmod.dark_magic.DarkMagicCore.BlockTileEntityDarkSteelFurnaces;
 import static project.studio.manametalmod.produce.mine.MineCore.MetalFurnace1Gold;
@@ -55,7 +56,7 @@ public class ClientProxy extends CommonProxy {
         RecipeInfo.registerOverlayHandler(aClass, new CookingTableOverlayHandler(), NEICooktable.class.getName());
         RecipeInfo.registerGuiOverlay(aClass, NEICooktable.class.getName(), new CookingTableOffsetPositioner());
 
-        addRecipeCatalyst("smelting", ItemCraft10.MetalFurnace1, ItemCraft10.MetalFurnace2, ItemCraft10.MetalFurnace3, ItemCraft10.MetalFurnace4, ItemCraft10.MetalFurnace5, ItemCraft10.MetalFurnace6, ItemCraft10.MetalFurnace7, MetalFurnace1Gold, BLOCKManaSF, BlockTileEntityDarkSteelFurnaces, LapudaFurnace, BLOCKTimeFurnace);
+        addRecipeCatalyst("smelting", BLOCKMetalFurnace, ItemCraft10.MetalFurnace1, ItemCraft10.MetalFurnace2, ItemCraft10.MetalFurnace3, ItemCraft10.MetalFurnace4, ItemCraft10.MetalFurnace5, ItemCraft10.MetalFurnace6, ItemCraft10.MetalFurnace7, MetalFurnace1Gold, BLOCKManaSF, BlockTileEntityDarkSteelFurnaces, LapudaFurnace, BLOCKTimeFurnace);
     }
 
     public void addRecipeCatalyst(String name, Object... objects) {
