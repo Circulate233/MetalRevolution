@@ -10,6 +10,7 @@
   ],
   "mixins": [
     "MixinItemMetalEnergy",
+    "MixinItemToolBackpackBase",
     "MixinMMM",
     "container.MixinContainerMetalSeparator",
     "recipe.crafting.MixinAlloyFurnaceRecipes",

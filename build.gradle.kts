@@ -134,6 +134,9 @@ dependencies {
     implementation("com.github.GTNewHorizons:GTNHLib:0.6.39:dev") {
         isTransitive = false
     }
+    implementation("com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-690-GTNH:dev") {
+        isTransitive = false
+    }
     implementation(rfg.deobf("curse.maven:muya1-7-10-530214:4364097"))
     implementation(rfg.deobf("curse.maven:manametal-531708:6943759"))
     implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.7:dev") {

@@ -2,6 +2,7 @@ package com.circulation.metal_revolution.mixins.MMM.tile;
 
 import com.circulation.metal_revolution.utils.SimpleItem;
 import it.unimi.dsi.fastutil.Pair;
+import it.unimi.dsi.fastutil.objects.Object2ObjectFunction;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectMap;
@@ -17,9 +18,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import project.studio.manametalmod.core.RecipeOre;
 import project.studio.manametalmod.tileentity.TileEntityBase;
 
@@ -56,26 +54,15 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
     @Unique
     private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp2;
 
-    @Inject(method = "<init>(Ljava/lang/String;Ljava/util/List;ILproject/studio/manametalmod/core/FuelType;)V", at = @At("TAIL"))
-    public void onInit(CallbackInfo ci) {
-        m$initValid();
-    }
-
-    @Inject(method = "<init>()V", at = @At("TAIL"))
-    public void onEmptyInit(CallbackInfo ci) {
-        m$initValid();
-    }
-
     @Unique
-    private void m$initValid() {
-        if (m$valids.containsKey(this.TileName)) return;
+    private final Object2ObjectFunction<String, Reference2BooleanFunction<ItemStack>[]> r$function = s -> {
         var valid = new Reference2BooleanFunction[m$AllSlot.length];
         valid[0] = item -> this.m$isItemRecipe1((ItemStack) item);
         valid[1] = item -> false;
         valid[2] = item -> this.isOKFuel((ItemStack) item);
         valid[3] = item -> this.m$isItemRecipe2((ItemStack) item);
-        m$valids.put(this.TileName, valid);
-    }
+        return valid;
+    };
 
     @Unique
     private void m$initRecipe() {
@@ -133,7 +120,7 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
      */
     @Overwrite(remap = true)
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
-        return m$valids.get(this.TileName)[slot].getBoolean(stack);
+        return m$valids.computeIfAbsent(this.TileName, r$function)[slot].getBoolean(stack);
     }
 
     @Unique

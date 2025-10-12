@@ -1,9 +1,11 @@
 package com.circulation.metal_revolution.utils;
 
 import com.github.bsideup.jabel.Desugar;
+import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectFunction;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectMaps;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
@@ -30,40 +32,31 @@ public record SimpleItem(Item item, int meta, NBTTagCompound nbt) {
         }
     };
 
-    public SimpleItem(ItemStack stack) {
+    private SimpleItem(ItemStack stack) {
         this(stack.getItem(), stack.getItemDamage(), stack.getTagCompound());
     }
 
     public static final SimpleItem empty = new SimpleItem(null, 0, null);
     private static final Reference2ObjectMap<Item, Int2ObjectMap<Map<NBTTagCompound, SimpleItem>>> chane = Reference2ObjectMaps.synchronize(new Reference2ObjectOpenHashMap<>());
 
-    public static SimpleItem getInstance(ItemStack stack) {
+    private static final Reference2ObjectFunction<Item, Int2ObjectMap<Map<NBTTagCompound, SimpleItem>>> intMap = i -> Int2ObjectMaps.synchronize(new Int2ObjectOpenHashMap<>());
+    private static final Int2ObjectFunction<Map<NBTTagCompound, SimpleItem>> itemMap = i -> new ConcurrentHashMap<>();
+
+    public static SimpleItem getInstance(final ItemStack stack) {
         if (stack == null) return empty;
         if (stack.getItem() == null) return empty;
-        final var m = chane.computeIfAbsent(stack.getItem(), i -> Int2ObjectMaps.synchronize(new Int2ObjectOpenHashMap<>()))
-            .computeIfAbsent(stack.getItemDamage(), i -> new ConcurrentHashMap<>());
         var nbt = stack.getTagCompound();
-        if (nbt == null) nbt = NullNbt;
-        var o = m.get(nbt);
-        if (o == null) {
-            o = new SimpleItem(stack);
-            m.put(nbt, o);
-        }
-        return o;
+        return chane.computeIfAbsent(stack.getItem(), intMap)
+            .computeIfAbsent(stack.getItemDamage(), itemMap)
+            .computeIfAbsent(nbt == null ? NullNbt : nbt, n -> new SimpleItem(stack));
     }
 
-    public static SimpleItem getNoNBTInstance(ItemStack stack) {
+    public static SimpleItem getNoNBTInstance(final ItemStack stack) {
         if (stack == null) return empty;
         if (stack.getItem() == null) return empty;
-        final var m = chane.computeIfAbsent(stack.getItem(), i -> Int2ObjectMaps.synchronize(new Int2ObjectOpenHashMap<>()))
-            .computeIfAbsent(stack.getItemDamage(), i -> new ConcurrentHashMap<>());
-        var nbt = NullNbt;
-        var o = m.get(NullNbt);
-        if (o == null) {
-            o = new SimpleItem(stack);
-            m.put(NullNbt, o);
-        }
-        return o;
+        return chane.computeIfAbsent(stack.getItem(), intMap)
+            .computeIfAbsent(stack.getItemDamage(), itemMap)
+            .computeIfAbsent(NullNbt, n -> new SimpleItem(stack));
     }
 
     @Override
