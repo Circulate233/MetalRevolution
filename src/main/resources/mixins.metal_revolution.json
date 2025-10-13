@@ -11,6 +11,7 @@
   "mixins": [
     "MixinMMM",
     "block.MixinBlockCheeseMaker",
+    "block.MixinBlockGilded",
     "block.MixinBlockManaMetalInjection",
     "block.MixinBlockMetalCraftTable",
     "block.MixinBlockMetalReduction",

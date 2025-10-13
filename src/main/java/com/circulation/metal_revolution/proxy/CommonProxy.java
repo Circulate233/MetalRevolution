@@ -1,6 +1,7 @@
 package com.circulation.metal_revolution.proxy;
 
 import com.circulation.metal_revolution.common.MRTileEntityCheeseMaker;
+import com.circulation.metal_revolution.common.MRTileEntityGilded;
 import com.circulation.metal_revolution.common.MRTileEntityManaMetalInjection;
 import com.circulation.metal_revolution.utils.MInitUtil;
 import com.github.bsideup.jabel.Desugar;
@@ -15,6 +16,7 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         registerTileEntity(MRTileEntityManaMetalInjection.class);
         registerTileEntity(MRTileEntityCheeseMaker.class);
+        registerTileEntity(MRTileEntityGilded.class);
     }
 
     public void init(FMLInitializationEvent event) {
