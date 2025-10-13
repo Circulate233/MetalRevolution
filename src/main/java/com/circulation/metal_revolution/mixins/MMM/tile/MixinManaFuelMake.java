@@ -41,4 +41,13 @@ public class MixinManaFuelMake {
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
         return m$valid[slot].getBoolean(stack);
     }
+
+    /**
+     * @author circulation
+     * @reason 覆写
+     */
+    @Overwrite
+    public boolean canExtractItem(int slot, ItemStack stack, int side) {
+        return slot == 2 || slot == 3;
+    }
 }
