@@ -1,4 +1,4 @@
-package com.circulation.metal_revolution.mixins.MMM;
+package com.circulation.metal_revolution.mixins.MMM.item;
 
 import com.circulation.metal_revolution.utils.MRUtil;
 import net.minecraft.item.Item;

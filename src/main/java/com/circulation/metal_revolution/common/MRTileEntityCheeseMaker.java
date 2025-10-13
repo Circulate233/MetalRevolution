@@ -1,23 +1,19 @@
 package com.circulation.metal_revolution.common;
 
 import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import project.studio.manametalmod.items.crafting.ManaFurnaceRecipes;
 import project.studio.manametalmod.tileentity.TileEntityCheeseMaker;
 
 public class MRTileEntityCheeseMaker extends TileEntityCheeseMaker {
 
     private static final int[] AllSlot = {0, 1, 2};
 
-    public static boolean isItemMilk(ItemStack itemStack) {
-        return true;
-    }
-
     private static final Reference2BooleanFunction<ItemStack>[] inputValid = new Reference2BooleanFunction[AllSlot.length];
     private static final Reference2BooleanFunction<ItemStack>[] outputValid = new Reference2BooleanFunction[AllSlot.length];
 
     static {
-        inputValid[0] = item -> ManaFurnaceRecipes.smelting().getSmeltingResult((ItemStack) item) != null;
+        inputValid[0] = item -> item instanceof ItemStack s && s.getItem() == Items.sugar;
         inputValid[1] = item -> isItemMilk((ItemStack) item);
         inputValid[2] = item -> false;
 

@@ -1,4 +1,4 @@
-package com.circulation.metal_revolution.mixins.MMM;
+package com.circulation.metal_revolution.mixins.MMM.item;
 
 import appeng.api.config.Actionable;
 import appeng.api.networking.security.PlayerSource;

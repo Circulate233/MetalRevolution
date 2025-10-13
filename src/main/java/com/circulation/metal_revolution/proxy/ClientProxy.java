@@ -14,17 +14,16 @@ import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import project.studio.manametalmod.Lapuda.LapudaCore;
+import project.studio.manametalmod.ManaMetalMod;
 import project.studio.manametalmod.client.GuiCookingTable;
 import project.studio.manametalmod.itemAndBlockCraft.ItemCraft10;
 import project.studio.manametalmod.nei.NEICooktable;
+import project.studio.manametalmod.nei.NEIIronCrusherHandler;
 import project.studio.manametalmod.nei.NEIManaGravityWellHandler;
 import project.studio.manametalmod.nei.NEIManaSewingMachine;
 import project.studio.manametalmod.nei.NEIManaSpinningWheel;
 
-import static project.studio.manametalmod.Lapuda.LapudaCore.LapudaFurnace;
-import static project.studio.manametalmod.ManaMetalMod.BLOCKManaSF;
-import static project.studio.manametalmod.ManaMetalMod.BLOCKMetalFurnace;
-import static project.studio.manametalmod.ManaMetalMod.BLOCKTimeFurnace;
 import static project.studio.manametalmod.dark_magic.DarkMagicCore.BlockTileEntityDarkSteelFurnaces;
 import static project.studio.manametalmod.produce.mine.MineCore.MetalFurnace1Gold;
 
@@ -56,7 +55,8 @@ public class ClientProxy extends CommonProxy {
         RecipeInfo.registerOverlayHandler(aClass, new CookingTableOverlayHandler(), NEICooktable.class.getName());
         RecipeInfo.registerGuiOverlay(aClass, NEICooktable.class.getName(), new CookingTableOffsetPositioner());
 
-        addRecipeCatalyst("smelting", BLOCKMetalFurnace, ItemCraft10.MetalFurnace1, ItemCraft10.MetalFurnace2, ItemCraft10.MetalFurnace3, ItemCraft10.MetalFurnace4, ItemCraft10.MetalFurnace5, ItemCraft10.MetalFurnace6, ItemCraft10.MetalFurnace7, MetalFurnace1Gold, BLOCKManaSF, BlockTileEntityDarkSteelFurnaces, LapudaFurnace, BLOCKTimeFurnace);
+        addRecipeCatalyst("smelting", ManaMetalMod.BLOCKMetalFurnace, ItemCraft10.MetalFurnace1, ItemCraft10.MetalFurnace2, ItemCraft10.MetalFurnace3, ItemCraft10.MetalFurnace4, ItemCraft10.MetalFurnace5, ItemCraft10.MetalFurnace6, ItemCraft10.MetalFurnace7, MetalFurnace1Gold, ManaMetalMod.BLOCKManaSF, BlockTileEntityDarkSteelFurnaces, LapudaCore.LapudaFurnace, ManaMetalMod.BLOCKTimeFurnace);
+        addRecipeCatalyst(NEIIronCrusherHandler.class.getName(), LapudaCore.LapudaOreCrusher);
     }
 
     public void addRecipeCatalyst(String name, Object... objects) {

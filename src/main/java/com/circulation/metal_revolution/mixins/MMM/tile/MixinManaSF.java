@@ -1,6 +1,7 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
 import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,5 +40,14 @@ public class MixinManaSF {
     @Overwrite
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
         return m$valid[slot].getBoolean(stack);
+    }
+
+    /**
+     * @author circulation
+     * @reason 覆写
+     */
+    @Overwrite
+    public boolean canExtractItem(int slot, ItemStack stack, int side) {
+        return slot == 2 || stack.getItem() == Items.bucket;
     }
 }

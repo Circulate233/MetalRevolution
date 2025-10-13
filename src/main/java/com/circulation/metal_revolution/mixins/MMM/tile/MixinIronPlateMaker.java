@@ -1,28 +1,28 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
 import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import project.studio.manametalmod.MMM;
-import project.studio.manametalmod.tileentity.TileEntityFurnaceMetal;
+import project.studio.manametalmod.items.crafting.IronPlateMakerRecipes;
+import project.studio.manametalmod.tileentity.TileEntityIronPlateMaker;
 
-@Mixin(TileEntityFurnaceMetal.class)
-public class MixinFurnaceMetal {
+@Mixin(TileEntityIronPlateMaker.class)
+public class MixinIronPlateMaker {
 
     @Unique
-    private static final int[] m$AllSlot = {0, 1, 2};
+    private static final int[] m$AllSlot = {0, 1, 2, 3};
 
     @Unique
     private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
 
     static {
-        m$valid[0] = item -> FurnaceRecipes.smelting().getSmeltingResult((ItemStack) item) != null;
+        m$valid[0] = item -> IronPlateMakerRecipes.smelting().getSmeltingResult((ItemStack) item) != null;
         m$valid[1] = item -> MMM.getItemStackFuelValue((ItemStack) item) > 0;
         m$valid[2] = item -> false;
+        m$valid[3] = item -> false;
     }
 
     /**
@@ -49,7 +49,6 @@ public class MixinFurnaceMetal {
      */
     @Overwrite
     public boolean canExtractItem(int slot, ItemStack stack, int side) {
-        return slot == 2 || stack.getItem() == Items.bucket;
+        return slot == 2 || slot == 3;
     }
-
 }
