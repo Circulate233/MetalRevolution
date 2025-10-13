@@ -22,18 +22,22 @@ public class MRTileEntityCheeseMaker extends TileEntityCheeseMaker {
         outputValid[2] = item -> true;
     }
 
+    @Override
     public int getSizeInventory() {
         return AllSlot.length;
     }
 
+    @Override
     public int[] getAccessibleSlotsFromSide(int side) {
         return AllSlot;
     }
 
+    @Override
     public boolean isItemValidForSlot(int slot, ItemStack item) {
         return inputValid[slot].getBoolean(item);
     }
 
+    @Override
     public boolean canExtractItem(int slot, ItemStack item, int side) {
         return outputValid[slot].getBoolean(item);
     }
