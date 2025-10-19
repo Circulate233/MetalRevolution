@@ -1,7 +1,3 @@
-import org.jetbrains.gradle.ext.Gradle
-import org.jetbrains.gradle.ext.RunConfigurationContainer
-import kotlin.apply
-
 plugins {
     `java-gradle-plugin`
     id("com.palantir.git-version") version "3.0.0"
@@ -312,47 +308,6 @@ publishing {
             credentials {
                 username = System.getenv("MAVEN_USER") ?: "NONE"
                 password = System.getenv("MAVEN_PASSWORD") ?: "NONE"
-            }
-        }
-    }
-}
-
-idea {
-    module {
-        isDownloadJavadoc = false
-        isDownloadSources = true
-        inheritOutputDirs = true // Fix resources in IJ-Native runs
-    }
-    project {
-        this.withGroovyBuilder {
-            "settings" {
-                "runConfigurations" {
-                    val self = this.delegate as RunConfigurationContainer
-                    self.add(Gradle("1. Run Client").apply {
-                        setProperty("taskNames", listOf("runClient"))
-                    })
-                    self.add(Gradle("2. Run Server").apply {
-                        setProperty("taskNames", listOf("runServer"))
-                    })
-                    self.add(Gradle("3. Run Obfuscated Client").apply {
-                        setProperty("taskNames", listOf("runObfClient"))
-                    })
-                    self.add(Gradle("4. Run Obfuscated Server").apply {
-                        setProperty("taskNames", listOf("runObfServer"))
-                    })
-                    self.add(Gradle("5. Build Jars").apply {
-                        setProperty("taskNames", listOf("build"))
-                    })
-                }
-                "compiler" {
-                    val self = this.delegate as org.jetbrains.gradle.ext.IdeaCompilerConfiguration
-                    afterEvaluate {
-                        self.javac.moduleJavacAdditionalOptions = mapOf(
-                            (project.name + ".main") to
-                                tasks.compileJava.get().options.compilerArgs.joinToString(" ") { '"' + it + '"' }
-                        )
-                    }
-                }
             }
         }
     }
