@@ -17,7 +17,7 @@ import project.studio.manametalmod.items.crafting.ManaSFRecipes;
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
-@Mixin(value = ManaSFRecipes.class,remap = false)
+@Mixin(value = ManaSFRecipes.class, remap = false)
 public abstract class MixinManaSFRecipes {
 
     @Shadow

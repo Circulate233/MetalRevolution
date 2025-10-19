@@ -13,7 +13,7 @@ import project.studio.manametalmod.items.crafting.EXPExtractorRecipes;
 import project.studio.manametalmod.magicenergy.IMagicEnergyUse;
 import project.studio.manametalmod.tileentity.TileEntityEXPExtractor;
 
-@Mixin(value = TileEntityEXPExtractor.class,remap = false)
+@Mixin(value = TileEntityEXPExtractor.class, remap = false)
 public abstract class MixinEXPExtractor extends TileEntity implements ISidedInventory, IMagicEnergyUse {
 
     @Unique

@@ -19,11 +19,19 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import project.studio.manametalmod.MMM;
 
-@Mixin(value = MMM.class,remap = false,priority = 999)
+@Mixin(value = MMM.class, remap = false, priority = 999)
 public class MixinMMM {
 
     @Unique
     private static final Reference2IntMap<Item> m$maneItemFuelMap = MInitUtil.maneItemFuelMap;
+    @Unique
+    private static final Reference2IntMap<SimpleItem> m$itemFuelMap = new Reference2IntOpenHashMap<>();
+    @Unique
+    private static final Reference2ReferenceMap<SimpleItem, String[]> m$ODNameMap = new Reference2ReferenceOpenHashMap<>();
+
+    static {
+        m$itemFuelMap.defaultReturnValue(-1);
+    }
 
     /**
      * @author circulation
@@ -36,13 +44,6 @@ public class MixinMMM {
         } else {
             return 0;
         }
-    }
-
-    @Unique
-    private static final Reference2IntMap<SimpleItem> m$itemFuelMap = new Reference2IntOpenHashMap<>();
-
-    static {
-        m$itemFuelMap.defaultReturnValue(-1);
     }
 
     /**
@@ -61,9 +62,6 @@ public class MixinMMM {
         }
         return out;
     }
-
-    @Unique
-    private static final Reference2ReferenceMap<SimpleItem, String[]> m$ODNameMap = new Reference2ReferenceOpenHashMap<>();
 
     /**
      * @author circulation

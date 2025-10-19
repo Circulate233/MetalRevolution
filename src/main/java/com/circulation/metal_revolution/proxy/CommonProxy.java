@@ -14,6 +14,10 @@ import net.minecraft.tileentity.TileEntity;
 
 public class CommonProxy {
 
+    public static void registerTileEntity(Class<? extends TileEntity> aCalss) {
+        GameRegistry.registerTileEntity(aCalss, aCalss.getSimpleName().toLowerCase());
+    }
+
     public void preInit(FMLPreInitializationEvent event) {
         registerTileEntity(MRTileEntityManaMetalInjection.class);
         registerTileEntity(MRTileEntityCheeseMaker.class);
@@ -29,19 +33,15 @@ public class CommonProxy {
 
     }
 
-    public static void registerTileEntity(Class<? extends TileEntity> aCalss){
-        GameRegistry.registerTileEntity(aCalss,aCalss.getSimpleName().toLowerCase());
-    }
-
-    public XYPair getXY(Class<?> aClass){
+    public XYPair getXY(Class<?> aClass) {
         return null;
     }
 
     @Desugar
-    public record XYPair(int x, int y){
+    public record XYPair(int x, int y) {
 
-        public static XYPair of(int x, int y){
-            return new XYPair(x,y);
+        public static XYPair of(int x, int y) {
+            return new XYPair(x, y);
         }
     }
 }

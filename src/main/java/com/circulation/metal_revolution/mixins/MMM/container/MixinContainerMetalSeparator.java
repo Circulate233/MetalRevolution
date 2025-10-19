@@ -56,8 +56,8 @@ public abstract class MixinContainerMetalSeparator extends Container {
         if (slotId == 2) {
             MRMetalSeparator te = (MRMetalSeparator) this.te;
             var o = super.slotClick(slotId, clickedButton, mode, player);
-            if (o == null){
-                if (te.m$upOutSlot()){
+            if (o == null) {
+                if (te.m$upOutSlot()) {
                     o = super.slotClick(slotId, clickedButton, mode, player);
                     te.m$upOutSlot();
                 }

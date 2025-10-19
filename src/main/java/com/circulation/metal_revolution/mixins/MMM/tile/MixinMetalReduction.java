@@ -23,17 +23,18 @@ import java.util.EnumMap;
 @Mixin(TileEntityMetalReduction.class)
 public class MixinMetalReduction extends TileEntity implements MRMetalEnergyMachinery, MRNeighborsTile {
 
-    @Shadow(remap = false)
-    public int metal;
-
     @Unique
-    private boolean m$init;
-
+    private static final int m$maxCacheEnergy = 1000;
     @Unique
-    private BlockPos m$pos;
-
+    private static final int[] m$AllSlot = {9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27};
     @Unique
     private final EnumMap<EnumFacing, MRMetalAutomaticProvider> m$neighbors = new EnumMap<>(EnumFacing.class);
+    @Shadow(remap = false)
+    public int metal;
+    @Unique
+    private boolean m$init;
+    @Unique
+    private BlockPos m$pos;
 
     @Override
     public void m$updateNeighbors(EnumFacing facing) {
@@ -113,9 +114,6 @@ public class MixinMetalReduction extends TileEntity implements MRMetalEnergyMach
         return m$pos;
     }
 
-    @Unique
-    private static final int m$maxCacheEnergy = 1000;
-
     @Override
     public int m$getEnergy() {
         return this.metal;
@@ -138,9 +136,6 @@ public class MixinMetalReduction extends TileEntity implements MRMetalEnergyMach
     public void m$setEnergy(int energy) {
         this.metal = energy;
     }
-
-    @Unique
-    private static final int[] m$AllSlot = {9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27};
 
     /**
      * @author circulation

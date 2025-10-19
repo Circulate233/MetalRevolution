@@ -26,7 +26,7 @@ public abstract class MixinGuiMetalSeparator extends GuiContainer {
 
     @Intrinsic
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        super.drawScreen(mouseX,mouseY,partialTicks);
+        super.drawScreen(mouseX, mouseY, partialTicks);
         MRMetalSeparator te = (MRMetalSeparator) this.te;
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;

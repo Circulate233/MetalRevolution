@@ -24,23 +24,23 @@ import java.util.Set;
 @Mixin(TileEntityAlloyFurnace.class)
 public abstract class MixinAlloyFurnace {
 
-    @Shadow(remap = false)
-    public static boolean isItemFuel(ItemStack item) {
-        return false;
-    }
-
-    @Shadow(remap = false)
-    private ItemStack[] inventory;
-
     @Unique
     private static final int[] m$AllSlot = {0, 1, 2, 3, 4};
-
+    @Unique
+    private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
+    @Shadow(remap = false)
+    private ItemStack[] inventory;
     @Unique
     private Set<SimpleItem> m$imp;
     @Unique
     private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp1;
     @Unique
     private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp2;
+
+    @Shadow(remap = false)
+    public static boolean isItemFuel(ItemStack item) {
+        return false;
+    }
 
     @Unique
     private void m$initRecipe() {
@@ -65,9 +65,6 @@ public abstract class MixinAlloyFurnace {
         m$rimp1 = rimp1;
         m$rimp2 = rimp2;
     }
-
-    @Unique
-    private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
 
     @Inject(method = "<init>()V", at = @At("TAIL"), remap = false)
     public void onInit(CallbackInfo ci) {

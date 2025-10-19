@@ -12,7 +12,7 @@ import project.studio.manametalmod.items.crafting.ManaFurnaceRecipes;
 import project.studio.manametalmod.magicenergy.IMagicEnergyUse;
 import project.studio.manametalmod.tileentity.TileEntityManaFurnace;
 
-@Mixin(value = TileEntityManaFurnace.class,remap = false)
+@Mixin(value = TileEntityManaFurnace.class, remap = false)
 public abstract class MixinManaFurnace extends TileEntity implements ISidedInventory, IMagicEnergyUse {
 
     @Unique

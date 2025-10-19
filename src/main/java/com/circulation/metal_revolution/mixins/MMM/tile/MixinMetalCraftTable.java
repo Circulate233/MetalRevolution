@@ -23,17 +23,19 @@ import java.util.EnumMap;
 @Mixin(TileEntityMetalCraftTable.class)
 public class MixinMetalCraftTable extends TileEntity implements MRMetalEnergyMachinery, MRNeighborsTile {
 
+    @Unique
+    private static final int[] m$AllSlot = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     @Shadow(remap = false)
-    public int metal;
-
-    @Unique
-    private boolean m$init;
-
-    @Unique
-    private BlockPos m$pos;
-
+    @Final
+    public static int maxMetal;
     @Unique
     private final EnumMap<EnumFacing, MRMetalAutomaticProvider> m$neighbors = new EnumMap<>(EnumFacing.class);
+    @Shadow(remap = false)
+    public int metal;
+    @Unique
+    private boolean m$init;
+    @Unique
+    private BlockPos m$pos;
 
     @Override
     public void m$updateNeighbors(EnumFacing facing) {
@@ -113,10 +115,6 @@ public class MixinMetalCraftTable extends TileEntity implements MRMetalEnergyMac
         return m$pos;
     }
 
-    @Shadow(remap = false)
-    @Final
-    public static int maxMetal;
-
     @Override
     public int m$getEnergy() {
         return this.metal;
@@ -139,9 +137,6 @@ public class MixinMetalCraftTable extends TileEntity implements MRMetalEnergyMac
     public void m$setEnergy(int energy) {
         this.metal = energy;
     }
-
-    @Unique
-    private static final int[] m$AllSlot = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     /**
      * @author circulation

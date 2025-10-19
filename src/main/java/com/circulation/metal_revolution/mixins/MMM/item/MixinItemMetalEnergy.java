@@ -11,8 +11,8 @@ import project.studio.manametalmod.items.ItemMetalEnergy;
 @Mixin(ItemMetalEnergy.class)
 public class MixinItemMetalEnergy extends Item {
 
-    @Inject(method = "<init>",at = @At("TAIL"))
-    public void onInit(String name, int size, CallbackInfo ci){
-        MRUtil.metalMap.put(this,size);
+    @Inject(method = "<init>", at = @At("TAIL"))
+    public void onInit(String name, int size, CallbackInfo ci) {
+        MRUtil.metalMap.put(this, size);
     }
 }

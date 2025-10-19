@@ -11,13 +11,13 @@ import project.studio.manametalmod.items.crafting.AlloyFurnaceRecipes;
 
 import java.util.List;
 
-@Mixin(value = AlloyFurnaceRecipes.class,remap = false)
+@Mixin(value = AlloyFurnaceRecipes.class, remap = false)
 public class MixinAlloyFurnaceRecipes {
 
     @Shadow
     public List<ItemStack[]> list;
 
-    @Inject(method = "<init>",at = @At("TAIL"))
+    @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(CallbackInfo ci) {
         this.list = new ObjectArrayList<>(this.list);
     }

@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Random;
 
 @SuppressWarnings("rawtypes")
-@Mixin(value = DiamondCompressorRecipes.class,remap = false)
+@Mixin(value = DiamondCompressorRecipes.class, remap = false)
 public abstract class MixinDiamondCompressorRecipes {
 
     @Shadow

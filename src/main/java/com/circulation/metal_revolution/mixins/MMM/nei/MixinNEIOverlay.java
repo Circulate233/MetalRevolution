@@ -20,7 +20,7 @@ import project.studio.manametalmod.nei.NEIMetalCraftTableHandler;
     NEIManaGravityWellHandler.class,
     NEIManaSewingMachine.class,
     NEIManaSpinningWheel.class
-},remap = false)
+}, remap = false)
 public abstract class MixinNEIOverlay extends TemplateRecipeHandler {
 
     @Unique
@@ -28,7 +28,7 @@ public abstract class MixinNEIOverlay extends TemplateRecipeHandler {
 
     @Intrinsic
     public String getOverlayIdentifier() {
-        if (!m$init){
+        if (!m$init) {
             m$init = true;
             m$regNEIOverlay();
         }

@@ -11,7 +11,7 @@ import project.studio.manametalmod.client.GuiSpinningWheel;
 import project.studio.manametalmod.network.ModGuiHandler;
 import project.studio.manametalmod.produce.textile.TileEntitySpinningWheel;
 
-@Mixin(value = ModGuiHandler.class,remap = false)
+@Mixin(value = ModGuiHandler.class, remap = false)
 public class MixinModGuiHandler {
 
     @Inject(method = "getClientGuiElement", at = @At("HEAD"), cancellable = true)

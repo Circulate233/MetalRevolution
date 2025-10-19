@@ -13,14 +13,14 @@ public class MRTileEntityManaMetalInjection extends TileEntityManaMetalInjection
     }
 
     @Override
-    public int getInventoryStackLimit(){
+    public int getInventoryStackLimit() {
         return 1;
     }
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack item) {
         super.setInventorySlotContents(slot, item);
-        if (slot == 0 && item != null){
+        if (slot == 0 && item != null) {
             this.setStart();
         }
     }

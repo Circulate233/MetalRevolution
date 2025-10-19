@@ -21,6 +21,6 @@ public class MRTileEntityGilded extends TileEntityGilded {
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
-        return this.isItemValidForSlot(slot,stack);
+        return this.isItemValidForSlot(slot, stack);
     }
 }

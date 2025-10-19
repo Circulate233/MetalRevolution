@@ -17,7 +17,7 @@ import project.studio.manametalmod.items.crafting.BedrockCrusherRecipes;
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
-@Mixin(value = BedrockCrusherRecipes.class,remap = false)
+@Mixin(value = BedrockCrusherRecipes.class, remap = false)
 public abstract class MixinBedrockCrusherRecipes {
 
     @Shadow

@@ -26,26 +26,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@Mixin(value = NEITileEntityTileBase.class,remap = false)
+@Mixin(value = NEITileEntityTileBase.class, remap = false)
 public abstract class MixinNEITileEntityTileBase extends TemplateRecipeHandler {
 
     @Unique
     private static final Map<Item, String> m$itemStringMap = new Reference2ObjectOpenHashMap<>();
-
+    @Shadow
+    public String TileName;
+    @Shadow
+    public FuelType Fuel;
+    @Shadow
+    public List<RecipeOre> recipe;
     @Unique
     private String m$handlerId = "";
 
     @Shadow
-    public String TileName;
-
-    @Shadow
     public abstract void addManaRecipeUse(ItemStack result);
-
-    @Shadow
-    public FuelType Fuel;
-
-    @Shadow
-    public List<RecipeOre> recipe;
 
     @Intrinsic
     public String getHandlerId() {

@@ -6,9 +6,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class TagUtils {
 
-    public static NBTTagCompound initTag(@NotNull ItemStack stack){
+    public static NBTTagCompound initTag(@NotNull ItemStack stack) {
         var tag = stack.getTagCompound();
-        if (tag == null){
+        if (tag == null) {
             tag = new NBTTagCompound();
             stack.setTagCompound(tag);
         }

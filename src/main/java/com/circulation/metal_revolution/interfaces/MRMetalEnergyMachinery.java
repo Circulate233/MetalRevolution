@@ -8,16 +8,16 @@ public interface MRMetalEnergyMachinery {
 
     void m$addEnergy(int enetgy);
 
-    default void m$reduceEnergy(int energy){
+    default void m$reduceEnergy(int energy) {
         m$addEnergy(-energy);
-        if (m$getEnergy() < 0){
+        if (m$getEnergy() < 0) {
             m$setEnergy(0);
         }
     }
 
     void m$setEnergy(int energy);
 
-    default int m$getCanInputQuantity(){
+    default int m$getCanInputQuantity() {
         return m$getMaxEnergy() - m$getEnergy();
     }
 }

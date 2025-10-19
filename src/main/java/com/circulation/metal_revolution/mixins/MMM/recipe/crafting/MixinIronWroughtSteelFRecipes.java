@@ -17,7 +17,7 @@ import project.studio.manametalmod.items.crafting.IronWroughtSteelFRecipes;
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
-@Mixin(value = IronWroughtSteelFRecipes.class,remap = false)
+@Mixin(value = IronWroughtSteelFRecipes.class, remap = false)
 public abstract class MixinIronWroughtSteelFRecipes {
 
     @Shadow

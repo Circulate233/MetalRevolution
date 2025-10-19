@@ -5,7 +5,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 
 public interface MRNeighborsTile {
-    default void m$updateNeighbors(){
+    default void m$updateNeighbors() {
         for (var facing : EnumFacing.values()) {
             m$updateNeighbors(facing);
         }

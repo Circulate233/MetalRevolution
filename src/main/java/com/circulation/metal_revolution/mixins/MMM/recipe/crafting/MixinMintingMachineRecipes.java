@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Random;
 
 @SuppressWarnings("rawtypes")
-@Mixin(value = MintingMachineRecipes.class,remap = false)
+@Mixin(value = MintingMachineRecipes.class, remap = false)
 public abstract class MixinMintingMachineRecipes {
 
     @Shadow

@@ -22,13 +22,26 @@ import project.studio.manametalmod.items.crafting.MetalSeparatorRecipes;
 import project.studio.manametalmod.tileentity.TileEntityMetalSeparator;
 
 @Mixin(TileEntityMetalSeparator.class)
-public abstract class MixinMetalSeparator extends TileEntity implements ISidedInventory,MRMetalSeparator {
-
-    @Unique
-    private int m$cacheEnergy;
+public abstract class MixinMetalSeparator extends TileEntity implements ISidedInventory, MRMetalSeparator {
 
     @Unique
     private static final int m$maxCacheEnergy = 10000;
+    @Unique
+    private static final int[] m$AllSlot = {0, 1, 2, 3};
+    @Unique
+    private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
+
+    static {
+        m$valid[0] = item -> MetalSeparatorRecipes.smelting().getSmeltingResult((ItemStack) item) != null;
+        m$valid[1] = item -> MMM.getManaItem((ItemStack) item);
+        m$valid[2] = item -> false;
+        m$valid[3] = item -> false;
+    }
+
+    @Shadow(remap = false)
+    public ItemStack[] inventory;
+    @Unique
+    private int m$cacheEnergy;
 
     @Unique
     @Override
@@ -55,22 +68,6 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
     @Override
     public int m$getMaxEnergy() {
         return m$maxCacheEnergy;
-    }
-
-    @Shadow(remap = false)
-    public ItemStack[] inventory;
-
-    @Unique
-    private static final int[] m$AllSlot = {0, 1, 2, 3};
-
-    @Unique
-    private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
-
-    static {
-        m$valid[0] = item -> MetalSeparatorRecipes.smelting().getSmeltingResult((ItemStack) item) != null;
-        m$valid[1] = item -> MMM.getManaItem((ItemStack) item);
-        m$valid[2] = item -> false;
-        m$valid[3] = item -> false;
     }
 
     /**

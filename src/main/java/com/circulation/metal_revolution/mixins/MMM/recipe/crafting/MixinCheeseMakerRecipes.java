@@ -17,7 +17,7 @@ import project.studio.manametalmod.items.crafting.CheeseMakerRecipes;
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
-@Mixin(value = CheeseMakerRecipes.class,remap = false)
+@Mixin(value = CheeseMakerRecipes.class, remap = false)
 public abstract class MixinCheeseMakerRecipes {
 
     @Shadow

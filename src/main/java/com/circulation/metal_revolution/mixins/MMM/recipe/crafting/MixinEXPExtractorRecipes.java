@@ -18,7 +18,7 @@ import project.studio.manametalmod.items.crafting.EXPExtractorRecipes;
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
-@Mixin(value = EXPExtractorRecipes.class,remap = false)
+@Mixin(value = EXPExtractorRecipes.class, remap = false)
 public abstract class MixinEXPExtractorRecipes {
 
     @Shadow

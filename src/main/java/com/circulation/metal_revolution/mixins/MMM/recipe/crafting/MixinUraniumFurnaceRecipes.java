@@ -17,7 +17,7 @@ import project.studio.manametalmod.items.crafting.UraniumFurnaceRecipes;
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
-@Mixin(value = UraniumFurnaceRecipes.class,remap = false)
+@Mixin(value = UraniumFurnaceRecipes.class, remap = false)
 public abstract class MixinUraniumFurnaceRecipes {
 
     @Shadow

@@ -19,9 +19,9 @@ public abstract class MixinBlockMetalReduction extends BlockContainer {
 
     @Intrinsic
     public void onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ) {
-        TileEntity ti = world.getTileEntity(x,y,z);
+        TileEntity ti = world.getTileEntity(x, y, z);
         if (ti instanceof MRNeighborsTile m) {
-            m.m$updateNeighbors(world, m.m$getPos(), new BlockPos(tileX,tileY,tileZ));
+            m.m$updateNeighbors(world, m.m$getPos(), new BlockPos(tileX, tileY, tileZ));
         }
     }
 

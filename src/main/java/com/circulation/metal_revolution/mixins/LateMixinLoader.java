@@ -23,20 +23,6 @@ public class LateMixinLoader implements ILateMixinLoader {
         addModdedMixinCFG("mixins.metal_revolution.trt.json", "trivialthoughts");
     }
 
-    @Override
-    public List<String> getMixinConfigs() {
-        return new ObjectArrayList<>(MIXIN_CONFIGS.keySet());
-    }
-
-    @Override
-    public boolean shouldMixinConfigQueue(final String mixinConfig) {
-        BooleanSupplier supplier = MIXIN_CONFIGS.get(mixinConfig);
-        if (supplier == null) {
-            return false;
-        }
-        return supplier.getAsBoolean();
-    }
-
     private static boolean modLoaded(final String modID) {
         return Loader.isModLoaded(modID);
     }
@@ -55,5 +41,19 @@ public class LateMixinLoader implements ILateMixinLoader {
 
     private static void addMixinCFG(final String mixinConfig, final BooleanSupplier conditions) {
         MIXIN_CONFIGS.put(mixinConfig, conditions);
+    }
+
+    @Override
+    public List<String> getMixinConfigs() {
+        return new ObjectArrayList<>(MIXIN_CONFIGS.keySet());
+    }
+
+    @Override
+    public boolean shouldMixinConfigQueue(final String mixinConfig) {
+        BooleanSupplier supplier = MIXIN_CONFIGS.get(mixinConfig);
+        if (supplier == null) {
+            return false;
+        }
+        return supplier.getAsBoolean();
     }
 }

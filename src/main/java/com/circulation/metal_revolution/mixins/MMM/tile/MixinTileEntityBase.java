@@ -25,35 +25,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Mixin(value = TileEntityBase.class,remap = false)
+@Mixin(value = TileEntityBase.class, remap = false)
 public abstract class MixinTileEntityBase extends TileEntity implements ISidedInventory {
 
-    @Shadow
-    public abstract boolean isOKFuel(ItemStack item);
-
+    @Unique
+    private static final int[] m$AllSlot = {0, 1, 2, 3};
+    @Unique
+    private final static Map<String, Reference2BooleanFunction<ItemStack>[]> m$valids = new Object2ObjectOpenHashMap<>();
     @Shadow
     public List<RecipeOre> recipe;
-
     @Shadow
     public ItemStack[] items;
     @Shadow
     public String TileName;
     @Unique
-    private static final int[] m$AllSlot = {0, 1, 2, 3};
-
-    @Unique
-    private final static Map<String, Reference2BooleanFunction<ItemStack>[]> m$valids = new Object2ObjectOpenHashMap<>();
-
-    @Unique
     private Pair<List<RecipeOre>, Set<SimpleItem>> m$imp1;
     @Unique
     private Pair<List<RecipeOre>, Set<SimpleItem>> m$imp2;
-
     @Unique
     private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp1;
     @Unique
     private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp2;
-
     @Unique
     private final Object2ObjectFunction<String, Reference2BooleanFunction<ItemStack>[]> r$function = s -> {
         var valid = new Reference2BooleanFunction[m$AllSlot.length];
@@ -63,6 +55,9 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
         valid[3] = item -> this.m$isItemRecipe2((ItemStack) item);
         return valid;
     };
+
+    @Shadow
+    public abstract boolean isOKFuel(ItemStack item);
 
     @Unique
     private void m$initRecipe() {
