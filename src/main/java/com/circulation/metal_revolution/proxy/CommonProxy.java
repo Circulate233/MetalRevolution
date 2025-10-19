@@ -1,6 +1,7 @@
 package com.circulation.metal_revolution.proxy;
 
 import com.circulation.metal_revolution.common.MRTileEntityCheeseMaker;
+import com.circulation.metal_revolution.common.MRTileEntityCrystalPillars;
 import com.circulation.metal_revolution.common.MRTileEntityGilded;
 import com.circulation.metal_revolution.common.MRTileEntityManaMetalInjection;
 import com.circulation.metal_revolution.utils.MInitUtil;
@@ -17,6 +18,7 @@ public class CommonProxy {
         registerTileEntity(MRTileEntityManaMetalInjection.class);
         registerTileEntity(MRTileEntityCheeseMaker.class);
         registerTileEntity(MRTileEntityGilded.class);
+        registerTileEntity(MRTileEntityCrystalPillars.class);
     }
 
     public void init(FMLInitializationEvent event) {

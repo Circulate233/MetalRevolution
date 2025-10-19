@@ -11,6 +11,7 @@
   "mixins": [
     "MixinMMM",
     "block.MixinBlockCheeseMaker",
+    "block.MixinBlockCrystalPillars",
     "block.MixinBlockGilded",
     "block.MixinBlockManaMetalInjection",
     "block.MixinBlockMetalCraftTable",
@@ -40,7 +41,6 @@
     "tile.MixinBedrockCrusher",
     "tile.MixinBedrockOre",
     "tile.MixinCrusherMetal",
-    "tile.MixinCrystalPillars",
     "tile.MixinDarkSteelBlast",
     "tile.MixinDarkSteelFurnace",
     "tile.MixinEXPExtractor",
