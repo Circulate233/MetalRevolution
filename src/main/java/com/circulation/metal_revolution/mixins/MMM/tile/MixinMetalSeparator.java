@@ -51,8 +51,8 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
 
     @Unique
     @Override
-    public void m$addEnergy(int enetgy) {
-        m$cacheEnergy += enetgy;
+    public void m$addEnergy(int energy) {
+        m$cacheEnergy += energy;
         if (m$cacheEnergy > m$maxCacheEnergy) {
             m$cacheEnergy = m$maxCacheEnergy;
         }

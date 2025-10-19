@@ -125,8 +125,8 @@ public class MixinMetalReduction extends TileEntity implements MRMetalEnergyMach
     }
 
     @Override
-    public void m$addEnergy(int enetgy) {
-        this.metal += enetgy;
+    public void m$addEnergy(int energy) {
+        this.metal += energy;
         if (this.metal > m$maxCacheEnergy) {
             this.metal = m$maxCacheEnergy;
         }

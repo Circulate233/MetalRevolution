@@ -126,8 +126,8 @@ public class MixinMetalCraftTable extends TileEntity implements MRMetalEnergyMac
     }
 
     @Override
-    public void m$addEnergy(int enetgy) {
-        this.metal += enetgy;
+    public void m$addEnergy(int energy) {
+        this.metal += energy;
         if (this.metal > maxMetal) {
             this.metal = maxMetal;
         }

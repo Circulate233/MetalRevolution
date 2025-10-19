@@ -6,7 +6,7 @@ public interface MRMetalEnergyMachinery {
 
     int m$getMaxEnergy();
 
-    void m$addEnergy(int enetgy);
+    void m$addEnergy(int energy);
 
     default void m$reduceEnergy(int energy) {
         m$addEnergy(-energy);
