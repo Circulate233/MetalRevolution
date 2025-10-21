@@ -1,34 +1,19 @@
-package com.circulation.metal_revolution.mixins.MMM.tile;
+package com.circulation.metal_revolution.common;
 
 import com.circulation.metal_revolution.interfaces.MRMetalSeparator;
 import com.circulation.metal_revolution.utils.MRUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import project.studio.manametalmod.MMM;
 import project.studio.manametalmod.ManaMetalMod;
 import project.studio.manametalmod.items.crafting.MetalSeparatorRecipes;
 import project.studio.manametalmod.tileentity.TileEntityMetalSeparator;
 
-@Mixin(TileEntityMetalSeparator.class)
-public abstract class MixinMetalSeparator extends TileEntity implements ISidedInventory, MRMetalSeparator {
+public class MRTileEntityMetalSeparator extends TileEntityMetalSeparator implements MRMetalSeparator {
 
-    @Unique
     private static final int m$maxCacheEnergy = 10000;
-    @Unique
     private static final int[] m$AllSlot = {0, 1, 2, 3};
-    @Unique
     private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
 
     static {
@@ -38,18 +23,39 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
         m$valid[3] = item -> false;
     }
 
-    @Shadow(remap = false)
-    public ItemStack[] inventory;
-    @Unique
-    private int m$cacheEnergy;
+    private int m$cacheEnergy = 0;
 
-    @Unique
+    public MRTileEntityMetalSeparator() {
+        super();
+    }
+
+    public MRTileEntityMetalSeparator(int speed) {
+        super(speed);
+    }
+
+    @Override
+    public ItemStack decrStackSize(int slot, int data) {
+        if (slot == 2 || slot == 3) m$upOutSlot();
+        return super.decrStackSize(slot, data);
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int slot) {
+        if (slot == 2 || slot == 3) m$upOutSlot();
+        return super.getStackInSlot(slot);
+    }
+
+    @Override
+    public void setInventorySlotContents(int slot, ItemStack stack) {
+        super.setInventorySlotContents(slot, stack);
+        if (slot == 2 || slot == 3) m$upOutSlot();
+    }
+
     @Override
     public int m$getEnergy() {
         return m$cacheEnergy;
     }
 
-    @Unique
     @Override
     public void m$addEnergy(int energy) {
         m$cacheEnergy += energy;
@@ -58,32 +64,20 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
         }
     }
 
-    @Unique
     @Override
     public void m$setEnergy(int energy) {
         m$cacheEnergy = energy;
     }
 
-    @Unique
     @Override
     public int m$getMaxEnergy() {
         return m$maxCacheEnergy;
     }
 
-    /**
-     * @author circulation
-     * @reason 覆写
-     */
-    @Overwrite
-    public boolean canInsertItem(int slot, ItemStack stack, int side) {
-        return m$valid[slot].getBoolean(stack);
+    public boolean isItemValidForSlot(int slot, ItemStack item) {
+        return m$valid[slot].getBoolean(item);
     }
 
-    /**
-     * @author circulation
-     * @reason 覆写
-     */
-    @Overwrite
     public boolean canExtractItem(int slot, ItemStack item, int side) {
         boolean i = slot == 2 || slot == 3;
         if (i && m$cacheEnergy >= 9) {
@@ -92,20 +86,10 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
         return i;
     }
 
-    /**
-     * @author circulation
-     * @reason 覆写
-     */
-    @Overwrite
     public int[] getAccessibleSlotsFromSide(int side) {
         return m$AllSlot;
     }
 
-    /**
-     * @author circulation
-     * @reason 覆写
-     */
-    @Overwrite(remap = false)
     public void smeltItem() {
         if (this.canSmelt()) {
             ItemStack itemstack = MetalSeparatorRecipes.smelting().getSmeltingResult(this.inventory[0]);
@@ -119,14 +103,8 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
                 this.inventory[0] = null;
             }
         }
-
     }
 
-    /**
-     * @author circulation
-     * @reason 覆写
-     */
-    @Overwrite(remap = false)
     public boolean canSmelt() {
         if (this.inventory[0] == null) {
             return false;
@@ -141,29 +119,30 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
         }
     }
 
-    @Inject(method = "readFromNBT", at = @At("TAIL"))
-    public void readFromNBT(NBTTagCompound nbt, CallbackInfo ci) {
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
         m$cacheEnergy = nbt.getInteger("cacheEnergy");
     }
 
-    @Inject(method = "writeToNBT", at = @At("TAIL"))
-    public void writeToNBT(NBTTagCompound nbt, CallbackInfo ci) {
+    @Override
+    public void writeToNBT(NBTTagCompound nbt) {
+        super.writeToNBT(nbt);
         nbt.setInteger("cacheEnergy", m$cacheEnergy);
     }
 
-    @Unique
     @Override
     public boolean m$upOutSlot() {
         if (m$cacheEnergy < 9) return false;
-        int need;
-        int max = this.getInventoryStackLimit();
+        final int need;
+        final int max = this.getInventoryStackLimit();
         if (this.inventory[2] == null) {
-            need = Math.min(64, m$cacheEnergy / 9);
+            need = Math.min(max, m$cacheEnergy / 9);
             this.inventory[2] = new ItemStack(ManaMetalMod.MetalEnergy02, need);
             m$cacheEnergy -= need * 9;
             return true;
-        } else if (this.inventory[2].stackSize < 64) {
-            need = Math.min(64 - this.inventory[2].stackSize, m$cacheEnergy / 9);
+        } else if (this.inventory[2].stackSize < max) {
+            need = Math.min(max - this.inventory[2].stackSize, m$cacheEnergy / 9);
             this.inventory[2].stackSize += need;
             m$cacheEnergy -= need * 9;
             return true;
@@ -171,19 +150,18 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
         return false;
     }
 
-    @Unique
     @Override
     public boolean m$upSmallOutSlot() {
         if (m$cacheEnergy < 1) return false;
-        int need;
-        int max = this.getInventoryStackLimit();
+        final int need;
+        final int max = this.getInventoryStackLimit();
         if (this.inventory[3] == null) {
-            need = Math.min(64, m$cacheEnergy);
+            need = Math.min(max, m$cacheEnergy);
             this.inventory[3] = new ItemStack(ManaMetalMod.MetalEnergy01, need);
             m$cacheEnergy -= need;
             return true;
-        } else if (this.inventory[3].stackSize < 64) {
-            need = Math.min(64 - this.inventory[3].stackSize, m$cacheEnergy);
+        } else if (this.inventory[3].stackSize < max) {
+            need = Math.min(max - this.inventory[3].stackSize, m$cacheEnergy);
             this.inventory[3].stackSize += need;
             m$cacheEnergy -= need;
             return true;
@@ -191,8 +169,6 @@ public abstract class MixinMetalSeparator extends TileEntity implements ISidedIn
         return false;
     }
 
-    @SideOnly(Side.CLIENT)
-    @Unique
     @Override
     public int m$getCache(int data) {
         return m$cacheEnergy * data / m$maxCacheEnergy;
