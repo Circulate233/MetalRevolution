@@ -59,6 +59,7 @@
     "tile.MixinMetalReduction",
     "tile.MixinOrePurification",
     "tile.MixinQualityTable",
+    "tile.MixinSpinningWheel",
     "tile.MixintemUseTable",
     "tile.MixinTileEntityBase",
     "tile.MixinWeaponScroll"
