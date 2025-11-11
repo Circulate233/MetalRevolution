@@ -108,7 +108,7 @@ public abstract class MixinItemToolBackpackBase extends Item {
 
         if (stack.hasTagCompound()) {
             NBTTagList list = stack.getTagCompound()
-                .getTagList("Items", 10);
+                                   .getTagList("Items", 10);
             for (int i = 0; i < list.tagCount(); i++) {
                 NBTTagCompound itemTag = list.getCompoundTagAt(i);
                 int slot = itemTag.getByte("Slot") & 255;

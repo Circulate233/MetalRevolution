@@ -57,9 +57,9 @@ public abstract class MixinAlloyFurnace {
             imp.add(s2);
 
             rimp1.computeIfAbsent(s1, ss -> new ReferenceOpenHashSet<>())
-                .add(s2);
+                 .add(s2);
             rimp2.computeIfAbsent(s2, ss -> new ReferenceOpenHashSet<>())
-                .add(s1);
+                 .add(s1);
         }
         m$imp = imp;
         m$rimp1 = rimp1;
