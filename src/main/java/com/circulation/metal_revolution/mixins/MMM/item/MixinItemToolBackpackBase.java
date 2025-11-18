@@ -8,6 +8,8 @@ import appeng.tile.misc.TileInterface;
 import appeng.util.item.AEItemStack;
 import com.circulation.metal_revolution.utils.IInventoryUtils;
 import com.circulation.metal_revolution.utils.TagUtils;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -54,7 +56,7 @@ public abstract class MixinItemToolBackpackBase extends Item {
         TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof IInventory inv) {
             var bagInv = m$getInventory(stack);
-            if (m$tryMoveItemsToAE(te, bagInv, player)) {
+            if (Loader.isModLoaded("appliedenergistics2") && m$tryMoveItemsToAE(te, bagInv, player)) {
                 this.m$saveInventory(stack, bagInv);
                 return true;
             }
@@ -78,6 +80,7 @@ public abstract class MixinItemToolBackpackBase extends Item {
     }
 
     @Unique
+    @Optional.Method(modid = "appliedenergistics2")
     private boolean m$tryMoveItemsToAE(TileEntity te, IInventory bagInv, EntityPlayer player) {
         if (!(te instanceof TileInterface ae)) return false;
         final var node = ae.getActionableNode();
