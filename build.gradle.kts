@@ -11,7 +11,7 @@ plugins {
 val gitVersion: groovy.lang.Closure<String> by extra
 
 group = "com.circulation.metal_revolution"
-version = "1.0.0"
+version = "1.0.1"
 
 // Add a source set for the functional test suite
 val functionalTestSourceSet = sourceSets.create("functionalTest") {}

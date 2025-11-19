@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(
-    modid = MetalRevolution.MOD_ID, name = "Metal Revolution", version = MetalRevolution.VERSION, acceptedMinecraftVersions = "[1.7.10]",
+    modid = MetalRevolution.MOD_ID, name = "MetalRevolution", version = MetalRevolution.VERSION, acceptedMinecraftVersions = "[1.7.10]",
     dependencies = "required-after:manametalmod@[7.4.5,);" +
         "required-after:unimixins@[0.1.23,);" +
         "required-after:gtnhlib@[0.6.39,);"

@@ -1,5 +1,5 @@
 
-rootProject.name = "Metal Revolution"
+rootProject.name = "MetalRevolution"
 
 pluginManagement {
   repositories {
