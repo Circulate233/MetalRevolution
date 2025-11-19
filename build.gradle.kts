@@ -133,8 +133,15 @@ dependencies {
     implementation("com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-690-GTNH:dev") {
         isTransitive = false
     }
+    runtimeOnly(rfg.deobf("curse.maven:cofhCore-69162:2388750"))
+    runtimeOnly("com.github.GTNewHorizons:NotEnoughEnergistics:1.7.14:dev"){
+        isTransitive = false
+    }
+    runtimeOnly("com.github.GTNewHorizons:AE2FluidCraft-Rework:1.4.115-gtnh:dev") {
+        isTransitive = false
+    }
     implementation(rfg.deobf("curse.maven:muya1-7-10-530214:4364097"))
-    implementation(rfg.deobf("curse.maven:manametal-531708:6943759"))
+    implementation(rfg.deobf("curse.maven:manametal-531708:7167749"))
     implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.7:dev") {
         isTransitive = false
     }

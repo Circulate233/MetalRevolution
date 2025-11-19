@@ -4,7 +4,7 @@
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
+  "client": [
     "MixinManaGravityWellHandlerS",
     "MixinNEICooktable",
     "MixinNEIManaMetalInjection",
@@ -13,7 +13,7 @@
     "MixinNEIManaSpinningWheelS",
     "MixinNEITileEntityTileBase"
   ],
-  "client": [
+  "mixins": [
     "MixinNEIOverlay"
   ]
 }
