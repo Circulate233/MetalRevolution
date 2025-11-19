@@ -14,6 +14,7 @@
     "MixinNEITileEntityTileBase"
   ],
   "mixins": [
-    "MixinNEIOverlay"
+    "MixinNEIOverlay",
+    "MixinRecipeManaCraftTable"
   ]
 }
