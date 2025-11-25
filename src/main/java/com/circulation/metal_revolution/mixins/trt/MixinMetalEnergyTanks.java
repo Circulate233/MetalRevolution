@@ -13,12 +13,12 @@ public class MixinMetalEnergyTanks implements MRMetalAutomaticProvider {
 
     @Override
     public int m$getEnergy() {
-        return (int) Math.min(Integer.MIN_VALUE, this.energyStock);
+        return (int) Math.min(Integer.MAX_VALUE, this.energyStock);
     }
 
     @Override
     public int m$getMaxEnergy() {
-        return Integer.MIN_VALUE;
+        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -41,6 +41,6 @@ public class MixinMetalEnergyTanks implements MRMetalAutomaticProvider {
 
     @Override
     public int m$getCanInputQuantity() {
-        return (int) Math.min(Integer.MIN_VALUE, 9000000000000000000L - this.energyStock);
+        return (int) Math.min(Integer.MAX_VALUE, 9000000000000000000L - this.energyStock);
     }
 }
