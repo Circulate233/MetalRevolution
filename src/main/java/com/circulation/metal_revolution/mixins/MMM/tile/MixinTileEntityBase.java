@@ -125,6 +125,7 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
             if (m$rimp2 == null) {
                 m$initRecipe();
             }
+            if (m$imp2 == null) return false;
             return m$rimp2
                 .getOrDefault(SimpleItem.getNoNBTInstance(this.items[3]), ReferenceSets.emptySet())
                 .contains(SimpleItem.getNoNBTInstance(item));
@@ -133,6 +134,7 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
             if (m$imp1 == null || m$imp1.left() != this.recipe) {
                 m$initRecipe();
             }
+            if (m$imp1 == null) return false;
             return m$imp1.right().contains(SimpleItem.getNoNBTInstance(item));
         }
 
@@ -146,6 +148,7 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
             if (m$rimp1 == null) {
                 m$initRecipe();
             }
+            if (m$imp1 == null) return false;
             return m$rimp1
                 .getOrDefault(SimpleItem.getNoNBTInstance(this.items[0]), ReferenceSets.emptySet())
                 .contains(SimpleItem.getNoNBTInstance(item));
@@ -154,6 +157,7 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
             if (m$imp2 == null || m$imp2.left() != this.recipe) {
                 m$initRecipe();
             }
+            if (m$imp2 == null) return false;
             return m$imp2.right().contains(SimpleItem.getNoNBTInstance(item));
         }
 

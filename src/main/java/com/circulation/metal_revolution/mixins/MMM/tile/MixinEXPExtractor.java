@@ -43,7 +43,7 @@ public abstract class MixinEXPExtractor extends TileEntity implements ISidedInve
      */
     @Overwrite(remap = true)
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
-        return m$valid[slot].getBoolean(slot);
+        return m$valid[slot].getBoolean(stack);
     }
 
     /**
