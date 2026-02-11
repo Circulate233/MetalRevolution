@@ -1,14 +1,15 @@
 package com.circulation.metal_revolution.mixins.MMM.nei;
 
-import codechicken.nei.PositionedStack;
-import it.unimi.dsi.fastutil.objects.ObjectLists;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import project.studio.manametalmod.nei.NEIManaCraftTable;
-
 import java.util.List;
 
-@Mixin(value = NEIManaCraftTable.RecipeManaCraftTable.class,remap = false)
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+
+import codechicken.nei.PositionedStack;
+import it.unimi.dsi.fastutil.objects.ObjectLists;
+import project.studio.manametalmod.nei.NEIManaCraftTable;
+
+@Mixin(value = NEIManaCraftTable.RecipeManaCraftTable.class, remap = false)
 public class MixinRecipeManaCraftTable {
 
     /**

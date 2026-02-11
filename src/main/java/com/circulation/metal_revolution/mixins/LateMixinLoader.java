@@ -1,17 +1,17 @@
 package com.circulation.metal_revolution.mixins;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BooleanSupplier;
+
 import cpw.mods.fml.common.Loader;
 import io.github.tox1cozz.mixinbooterlegacy.ILateMixinLoader;
 import io.github.tox1cozz.mixinbooterlegacy.LateMixin;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BooleanSupplier;
-
-@SuppressWarnings({"unused", "SameParameterValue"})
+@SuppressWarnings({ "unused", "SameParameterValue" })
 @LateMixin
 public class LateMixinLoader implements ILateMixinLoader {
 
@@ -32,7 +32,10 @@ public class LateMixinLoader implements ILateMixinLoader {
     }
 
     private static void addModdedMixinCFG(final String mixinConfig, final String modID, final String... modIDs) {
-        MIXIN_CONFIGS.put(mixinConfig, () -> modLoaded(modID) && Arrays.stream(modIDs).allMatch(Loader::isModLoaded));
+        MIXIN_CONFIGS.put(
+            mixinConfig,
+            () -> modLoaded(modID) && Arrays.stream(modIDs)
+                .allMatch(Loader::isModLoaded));
     }
 
     private static void addMixinCFG(final String mixinConfig) {

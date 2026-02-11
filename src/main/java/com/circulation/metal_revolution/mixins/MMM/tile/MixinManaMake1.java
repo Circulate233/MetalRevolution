@@ -1,24 +1,28 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
-import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import net.minecraft.item.ItemStack;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
+
+import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import project.studio.manametalmod.MMM;
 import project.studio.manametalmod.items.crafting.ManaMake1Recipes;
 import project.studio.manametalmod.tileentity.TileEntityManaMake1;
 
 @Mixin(TileEntityManaMake1.class)
 public class MixinManaMake1 {
+
     @Unique
-    private static final int[] m$AllSlot = {0, 1, 2, 3};
+    private static final int[] m$AllSlot = { 0, 1, 2, 3 };
 
     @Unique
     private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
 
     static {
-        m$valid[0] = item -> ManaMake1Recipes.smelting().getSmeltingResult((ItemStack) item) != null;
+        m$valid[0] = item -> ManaMake1Recipes.smelting()
+            .getSmeltingResult((ItemStack) item) != null;
         m$valid[1] = item -> MMM.getItemStackFuelValue((ItemStack) item) > 0;
         m$valid[2] = item -> false;
         m$valid[3] = item -> false;

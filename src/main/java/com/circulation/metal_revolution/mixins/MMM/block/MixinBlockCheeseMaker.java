@@ -1,14 +1,16 @@
 package com.circulation.metal_revolution.mixins.MMM.block;
 
-
-import com.circulation.metal_revolution.common.MRTileEntityCheeseMaker;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+
+import com.circulation.metal_revolution.common.MRTileEntityCheeseMaker;
+
 import project.studio.manametalmod.blocks.BlockTileEntityCheeseMaker;
 
 @Mixin(BlockTileEntityCheeseMaker.class)

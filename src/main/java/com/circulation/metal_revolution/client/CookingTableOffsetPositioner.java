@@ -1,11 +1,11 @@
 package com.circulation.metal_revolution.client;
 
+import java.util.ArrayList;
+
 import codechicken.nei.PositionedStack;
 import codechicken.nei.api.IStackPositioner;
 
-import java.util.ArrayList;
-
-public class CookingTableOffsetPositioner implements IStackPositioner {
+public final class CookingTableOffsetPositioner implements IStackPositioner {
 
     @Override
     public ArrayList<PositionedStack> positionStacks(ArrayList<PositionedStack> ai) {

@@ -1,19 +1,22 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
-import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
+
+import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import project.studio.manametalmod.MMM;
 import project.studio.manametalmod.api.IQualityPearl;
 import project.studio.manametalmod.tileentity.TileEntityQualityTable;
 
 @Mixin(TileEntityQualityTable.class)
 public class MixinQualityTable {
+
     @Unique
-    private static final int[] m$AllSlot = {0, 1};
+    private static final int[] m$AllSlot = { 0, 1 };
 
     @Unique
     private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];

@@ -1,18 +1,21 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
+import java.util.stream.IntStream;
+
 import net.minecraft.item.ItemStack;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
-import project.studio.manametalmod.tileentity.TileEntityManaGravityWell;
 
-import java.util.stream.IntStream;
+import project.studio.manametalmod.tileentity.TileEntityManaGravityWell;
 
 @Mixin(TileEntityManaGravityWell.class)
 public class MixinManaGravityWell {
 
     @Unique
-    private static final int[] m$AllSlot = IntStream.range(0, 13).toArray();
+    private static final int[] m$AllSlot = IntStream.range(0, 13)
+        .toArray();
 
     /**
      * @author circulation

@@ -3,8 +3,7 @@
 /.idea/
 /.vscode/
 /run/
-run/
-build/
+/build/
 /eclipse/
 .classpath
 .project
@@ -30,5 +29,9 @@ whitelist.json
 *.bat
 *.DS_Store
 !gradlew.bat
-/.vs/
-*.copy
+.factorypath
+addon.local.gradle
+addon.local.gradle.kts
+addon.late.local.gradle
+addon.late.local.gradle.kts
+layout.json

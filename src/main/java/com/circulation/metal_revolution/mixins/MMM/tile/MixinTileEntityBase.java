@@ -1,6 +1,22 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+
 import com.circulation.metal_revolution.utils.SimpleItem;
+
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectFunction;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -10,26 +26,14 @@ import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ReferenceReferenceMutablePair;
 import it.unimi.dsi.fastutil.objects.ReferenceSets;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import project.studio.manametalmod.core.RecipeOre;
 import project.studio.manametalmod.tileentity.TileEntityBase;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Mixin(value = TileEntityBase.class, remap = false)
 public abstract class MixinTileEntityBase extends TileEntity implements ISidedInventory {
 
     @Unique
-    private static final int[] m$AllSlot = {0, 1, 2, 3};
+    private static final int[] m$AllSlot = { 0, 1, 2, 3 };
     @Unique
     private final static Map<String, Reference2BooleanFunction<ItemStack>[]> m$valids = new Object2ObjectOpenHashMap<>();
     @Shadow
@@ -47,10 +51,10 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
     @Unique
     private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp2;
     @Unique
-    private final Object2ObjectFunction<String, Reference2BooleanFunction<ItemStack>[]> r$function = s -> {
+    private final Object2ObjectFunction<String, Reference2BooleanFunction<ItemStack>[]> r$function = _ -> {
         var valid = new Reference2BooleanFunction[m$AllSlot.length];
         valid[0] = item -> this.m$isItemRecipe1((ItemStack) item);
-        valid[1] = item -> false;
+        valid[1] = _ -> false;
         valid[2] = item -> this.isOKFuel((ItemStack) item);
         valid[3] = item -> this.m$isItemRecipe2((ItemStack) item);
         return valid;
@@ -79,18 +83,20 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
             Reference2ObjectMap<SimpleItem, Set<SimpleItem>> rimp2 = new Reference2ObjectOpenHashMap<>();
 
             for (RecipeOre recipeOre : this.recipe) {
-                var list1 = recipeOre.getImp1().getItem();
-                var list2 = recipeOre.getImp2().getItem();
+                var list1 = recipeOre.getImp1()
+                    .getItem();
+                var list2 = recipeOre.getImp2()
+                    .getItem();
                 for (ItemStack stack : list1) {
                     var s = SimpleItem.getNoNBTInstance(stack);
                     imp1.add(s);
-                    var set = rimp1.computeIfAbsent(s, ss -> new ReferenceOpenHashSet<>());
+                    var set = rimp1.computeIfAbsent(s, _ -> new ReferenceOpenHashSet<>());
                     list2.forEach(i -> set.add(SimpleItem.getNoNBTInstance(i)));
                 }
                 for (ItemStack stack : list2) {
                     var s = SimpleItem.getNoNBTInstance(stack);
                     imp2.add(s);
-                    var set = rimp2.computeIfAbsent(s, ss -> new ReferenceOpenHashSet<>());
+                    var set = rimp2.computeIfAbsent(s, _ -> new ReferenceOpenHashSet<>());
                     list1.forEach(i -> set.add(SimpleItem.getNoNBTInstance(i)));
                 }
             }
@@ -119,15 +125,14 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
     }
 
     @Unique
-    public boolean m$isItemRecipe1(@NotNull ItemStack item) {
+    public boolean m$isItemRecipe1(@Nonnull ItemStack item) {
         if (this.items == null) return false;
         if (this.items[3] != null) {
             if (m$rimp2 == null) {
                 m$initRecipe();
             }
             if (m$imp2 == null) return false;
-            return m$rimp2
-                .getOrDefault(SimpleItem.getNoNBTInstance(this.items[3]), ReferenceSets.emptySet())
+            return m$rimp2.getOrDefault(SimpleItem.getNoNBTInstance(this.items[3]), ReferenceSets.emptySet())
                 .contains(SimpleItem.getNoNBTInstance(item));
         }
         if (this.recipe != null) {
@@ -135,22 +140,22 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
                 m$initRecipe();
             }
             if (m$imp1 == null) return false;
-            return m$imp1.right().contains(SimpleItem.getNoNBTInstance(item));
+            return m$imp1.right()
+                .contains(SimpleItem.getNoNBTInstance(item));
         }
 
         return false;
     }
 
     @Unique
-    public boolean m$isItemRecipe2(@NotNull ItemStack item) {
+    public boolean m$isItemRecipe2(@Nonnull ItemStack item) {
         if (this.items == null) return false;
         if (this.items[0] != null) {
             if (m$rimp1 == null) {
                 m$initRecipe();
             }
             if (m$imp1 == null) return false;
-            return m$rimp1
-                .getOrDefault(SimpleItem.getNoNBTInstance(this.items[0]), ReferenceSets.emptySet())
+            return m$rimp1.getOrDefault(SimpleItem.getNoNBTInstance(this.items[0]), ReferenceSets.emptySet())
                 .contains(SimpleItem.getNoNBTInstance(item));
         }
         if (this.recipe != null) {
@@ -158,7 +163,8 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
                 m$initRecipe();
             }
             if (m$imp2 == null) return false;
-            return m$imp2.right().contains(SimpleItem.getNoNBTInstance(item));
+            return m$imp2.right()
+                .contains(SimpleItem.getNoNBTInstance(item));
         }
 
         return false;

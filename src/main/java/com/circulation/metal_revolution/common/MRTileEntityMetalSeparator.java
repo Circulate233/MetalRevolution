@@ -1,10 +1,12 @@
 package com.circulation.metal_revolution.common;
 
-import com.circulation.metal_revolution.interfaces.MRMetalSeparator;
-import com.circulation.metal_revolution.utils.MRUtil;
-import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import com.circulation.metal_revolution.interfaces.MRMetalSeparator;
+import com.circulation.metal_revolution.utils.MRUtil;
+
+import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import project.studio.manametalmod.MMM;
 import project.studio.manametalmod.ManaMetalMod;
 import project.studio.manametalmod.items.crafting.MetalSeparatorRecipes;
@@ -13,11 +15,12 @@ import project.studio.manametalmod.tileentity.TileEntityMetalSeparator;
 public class MRTileEntityMetalSeparator extends TileEntityMetalSeparator implements MRMetalSeparator {
 
     private static final int m$maxCacheEnergy = 10000;
-    private static final int[] m$AllSlot = {0, 1, 2, 3};
+    private static final int[] m$AllSlot = { 0, 1, 2, 3 };
     private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
 
     static {
-        m$valid[0] = item -> MetalSeparatorRecipes.smelting().getSmeltingResult((ItemStack) item) != null;
+        m$valid[0] = item -> MetalSeparatorRecipes.smelting()
+            .getSmeltingResult((ItemStack) item) != null;
         m$valid[1] = item -> MMM.getManaItem((ItemStack) item);
         m$valid[2] = item -> false;
         m$valid[3] = item -> false;
@@ -92,7 +95,8 @@ public class MRTileEntityMetalSeparator extends TileEntityMetalSeparator impleme
 
     public void smeltItem() {
         if (this.canSmelt()) {
-            ItemStack itemstack = MetalSeparatorRecipes.smelting().getSmeltingResult(this.inventory[0]);
+            ItemStack itemstack = MetalSeparatorRecipes.smelting()
+                .getSmeltingResult(this.inventory[0]);
             final int energy = MRUtil.getStackMetalEnergy(itemstack) + 1;
 
             m$addEnergy(energy);
@@ -109,7 +113,8 @@ public class MRTileEntityMetalSeparator extends TileEntityMetalSeparator impleme
         if (this.inventory[0] == null) {
             return false;
         } else {
-            ItemStack itemstack = MetalSeparatorRecipes.smelting().getSmeltingResult(this.inventory[0]);
+            ItemStack itemstack = MetalSeparatorRecipes.smelting()
+                .getSmeltingResult(this.inventory[0]);
             if (itemstack == null) {
                 return false;
             } else {

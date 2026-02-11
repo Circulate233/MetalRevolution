@@ -1,12 +1,11 @@
 package com.circulation.metal_revolution.mixins.MMM.recipe.crafting;
 
-import it.unimi.dsi.fastutil.objects.Reference2FloatMap;
-import it.unimi.dsi.fastutil.objects.Reference2FloatOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Reference2IntMap;
-import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
+import java.util.Map;
+import java.util.Random;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,10 +13,13 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import project.studio.manametalmod.items.crafting.StonecutterRecipes;
 
-import java.util.Map;
-import java.util.Random;
+import it.unimi.dsi.fastutil.objects.Reference2FloatMap;
+import it.unimi.dsi.fastutil.objects.Reference2FloatOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Reference2IntMap;
+import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
+import project.studio.manametalmod.items.crafting.StonecutterRecipes;
 
 @SuppressWarnings("rawtypes")
 @Mixin(value = StonecutterRecipes.class, remap = false)
@@ -51,7 +53,8 @@ public abstract class MixinStonecutterRecipes {
         if (experienceList instanceof Reference2FloatOpenHashMap) {
             return (Reference2FloatOpenHashMap<ItemStack>) experienceList;
         } else {
-            return (Reference2FloatOpenHashMap<ItemStack>) (experienceList = new Reference2FloatOpenHashMap<ItemStack>(experienceList));
+            return (Reference2FloatOpenHashMap<ItemStack>) (experienceList = new Reference2FloatOpenHashMap<ItemStack>(
+                experienceList));
         }
     }
 
@@ -60,7 +63,8 @@ public abstract class MixinStonecutterRecipes {
         if (smeltingextraitem_chanceList instanceof Reference2IntOpenHashMap) {
             return (Reference2IntOpenHashMap<ItemStack>) smeltingextraitem_chanceList;
         } else {
-            return (Reference2IntOpenHashMap<ItemStack>) (smeltingextraitem_chanceList = new Reference2IntOpenHashMap<ItemStack>(smeltingextraitem_chanceList));
+            return (Reference2IntOpenHashMap<ItemStack>) (smeltingextraitem_chanceList = new Reference2IntOpenHashMap<ItemStack>(
+                smeltingextraitem_chanceList));
         }
     }
 

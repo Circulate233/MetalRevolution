@@ -1,22 +1,26 @@
 package com.circulation.metal_revolution.mixins.MMM;
 
+import javax.annotation.Nonnull;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.oredict.OreDictionary;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Unique;
+
 import com.circulation.metal_revolution.utils.MInitUtil;
 import com.circulation.metal_revolution.utils.MRUtil;
 import com.circulation.metal_revolution.utils.SimpleItem;
+
 import cpw.mods.fml.common.ModAPIManager;
 import cpw.mods.fml.common.registry.GameData;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceMap;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraftforge.oredict.OreDictionary;
-import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Unique;
 import project.studio.manametalmod.MMM;
 
 @Mixin(value = MMM.class, remap = false, priority = 999)
@@ -107,7 +111,7 @@ public class MixinMMM {
      * @reason 一种可能更快的物品MODID获取？
      */
     @Overwrite
-    public static String getItemStackModid(@NotNull ItemStack stack) {
+    public static String getItemStackModid(@Nonnull ItemStack stack) {
         return getItemModid(stack.getItem());
     }
 
@@ -117,7 +121,8 @@ public class MixinMMM {
      */
     @Overwrite
     public static String getItemModid(Item stack) {
-        String id = GameData.getItemRegistry().getNameForObject(stack);
+        String id = GameData.getItemRegistry()
+            .getNameForObject(stack);
         return id == null ? "minecraft" : id.split(":", 2)[0];
     }
 

@@ -1,12 +1,15 @@
 package com.circulation.metal_revolution.mixins.MMM.block;
 
-import com.circulation.metal_revolution.common.MRTileEntityGilded;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+
+import com.circulation.metal_revolution.common.MRTileEntityGilded;
+
 import project.studio.manametalmod.Lapuda.BlockGilded;
 import project.studio.manametalmod.blocks.BlockBase;
 

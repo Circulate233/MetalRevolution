@@ -1,8 +1,10 @@
 package com.circulation.metal_revolution.mixins.trt;
 
-import com.circulation.metal_revolution.interfaces.MRMetalAutomaticProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+
+import com.circulation.metal_revolution.interfaces.MRMetalAutomaticProvider;
+
 import snowdragon.trivialthoughts.tileentity.TileEntityTanks;
 
 @Mixin(TileEntityTanks.class)

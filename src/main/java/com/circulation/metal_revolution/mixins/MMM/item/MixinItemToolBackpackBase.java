@@ -1,15 +1,5 @@
 package com.circulation.metal_revolution.mixins.MMM.item;
 
-import appeng.api.config.Actionable;
-import appeng.api.networking.security.PlayerSource;
-import appeng.api.networking.storage.IStorageGrid;
-import appeng.api.storage.data.IAEItemStack;
-import appeng.tile.misc.TileInterface;
-import appeng.util.item.AEItemStack;
-import com.circulation.metal_revolution.utils.IInventoryUtils;
-import com.circulation.metal_revolution.utils.TagUtils;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -19,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,7 +17,20 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.circulation.metal_revolution.utils.IInventoryUtils;
+import com.circulation.metal_revolution.utils.TagUtils;
+
+import appeng.api.config.Actionable;
+import appeng.api.networking.security.PlayerSource;
+import appeng.api.networking.storage.IStorageGrid;
+import appeng.api.storage.data.IAEItemStack;
+import appeng.tile.misc.TileInterface;
+import appeng.util.item.AEItemStack;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Optional;
 import project.studio.manametalmod.items.ItemToolBackpackBase;
+import project.studio.manametalmod.items.ItemToolBackpackManaItem;
 
 @Mixin(ItemToolBackpackBase.class)
 public abstract class MixinItemToolBackpackBase extends Item {
@@ -35,7 +39,9 @@ public abstract class MixinItemToolBackpackBase extends Item {
     public abstract int getSoltCount();
 
     @Inject(method = "onItemRightClick", at = @At("HEAD"), cancellable = true)
-    public void onItemRightClick(ItemStack item, World world, EntityPlayer player, CallbackInfoReturnable<ItemStack> cir) {
+    public void onItemRightClick(ItemStack item, World world, EntityPlayer player,
+        CallbackInfoReturnable<ItemStack> cir) {
+        if ((Object) this instanceof ItemToolBackpackManaItem) return;
         if (player.isSneaking()) {
             cir.setReturnValue(item);
         }
@@ -43,7 +49,8 @@ public abstract class MixinItemToolBackpackBase extends Item {
 
     @Intrinsic
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
-                             float hitX, float hitY, float hitZ) {
+        float hitX, float hitY, float hitZ) {
+        if ((Object) this instanceof ItemToolBackpackManaItem) return false;
         if (!world.isRemote && player.isSneaking()) {
             return this.m$tryMoveItems(world, x, y, z, player.getHeldItem(), player);
         } else {
@@ -106,12 +113,12 @@ public abstract class MixinItemToolBackpackBase extends Item {
     }
 
     @Unique
-    protected IInventory m$getInventory(ItemStack stack) {
+    private IInventory m$getInventory(ItemStack stack) {
         InventoryBasic inv = new InventoryBasic(this.getUnlocalizedName(stack), false, this.getSoltCount());
 
         if (stack.hasTagCompound()) {
             NBTTagList list = stack.getTagCompound()
-                                   .getTagList("Items", 10);
+                .getTagList("Items", 10);
             for (int i = 0; i < list.tagCount(); i++) {
                 NBTTagCompound itemTag = list.getCompoundTagAt(i);
                 int slot = itemTag.getByte("Slot") & 255;
@@ -125,7 +132,7 @@ public abstract class MixinItemToolBackpackBase extends Item {
     }
 
     @Unique
-    protected void m$saveInventory(ItemStack stack, IInventory inv) {
+    private void m$saveInventory(ItemStack stack, IInventory inv) {
         NBTTagList list = new NBTTagList();
         for (byte i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack s = inv.getStackInSlot(i);
@@ -136,6 +143,7 @@ public abstract class MixinItemToolBackpackBase extends Item {
                 list.appendTag(tag);
             }
         }
-        TagUtils.initTag(stack).setTag("Items", list);
+        TagUtils.initTag(stack)
+            .setTag("Items", list);
     }
 }

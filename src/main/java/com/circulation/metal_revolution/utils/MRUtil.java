@@ -1,9 +1,10 @@
 package com.circulation.metal_revolution.utils;
 
-import it.unimi.dsi.fastutil.objects.Reference2IntMap;
-import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import it.unimi.dsi.fastutil.objects.Reference2IntMap;
+import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 
 public class MRUtil {
 

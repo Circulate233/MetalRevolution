@@ -1,16 +1,18 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
 import net.minecraft.item.ItemStack;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
+
 import project.studio.manametalmod.tileentity.TileEntityOrePurification;
 
 @Mixin(TileEntityOrePurification.class)
 public class MixinOrePurification {
 
     @Unique
-    private static final int[] m$AllSlot = {0, 1};
+    private static final int[] m$AllSlot = { 0, 1 };
 
     /**
      * @author circulation

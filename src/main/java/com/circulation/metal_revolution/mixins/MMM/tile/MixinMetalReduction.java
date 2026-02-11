@@ -1,13 +1,12 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
-import com.circulation.metal_revolution.interfaces.MRMetalAutomaticProvider;
-import com.circulation.metal_revolution.interfaces.MRMetalEnergyMachinery;
-import com.circulation.metal_revolution.interfaces.MRNeighborsTile;
-import com.circulation.metal_revolution.utils.BlockPos;
+import java.util.EnumMap;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,10 +14,14 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.circulation.metal_revolution.interfaces.MRMetalAutomaticProvider;
+import com.circulation.metal_revolution.interfaces.MRMetalEnergyMachinery;
+import com.circulation.metal_revolution.interfaces.MRNeighborsTile;
+import com.circulation.metal_revolution.utils.BlockPos;
+
 import project.studio.manametalmod.api.IMetalEnergy;
 import project.studio.manametalmod.tileentity.TileEntityMetalReduction;
-
-import java.util.EnumMap;
 
 @Mixin(TileEntityMetalReduction.class)
 public class MixinMetalReduction extends TileEntity implements MRMetalEnergyMachinery, MRNeighborsTile {
@@ -26,7 +29,7 @@ public class MixinMetalReduction extends TileEntity implements MRMetalEnergyMach
     @Unique
     private static final int m$maxCacheEnergy = 1000;
     @Unique
-    private static final int[] m$AllSlot = {9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27};
+    private static final int[] m$AllSlot = { 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27 };
     @Unique
     private final EnumMap<EnumFacing, MRMetalAutomaticProvider> m$neighbors = new EnumMap<>(EnumFacing.class);
     @Shadow(remap = false)
@@ -73,7 +76,8 @@ public class MixinMetalReduction extends TileEntity implements MRMetalEnergyMach
             }
         }
 
-        if (this.worldObj.getTileEntity(neighbor.x(), neighbor.y(), neighbor.z()) instanceof MRMetalAutomaticProvider m) {
+        if (this.worldObj
+            .getTileEntity(neighbor.x(), neighbor.y(), neighbor.z()) instanceof MRMetalAutomaticProvider m) {
             m$neighbors.put(updateFromFacing, m);
         } else {
             m$neighbors.remove(updateFromFacing);

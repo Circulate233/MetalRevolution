@@ -1,7 +1,8 @@
 package com.circulation.metal_revolution.utils;
 
-import com.github.bsideup.jabel.Desugar;
 import net.minecraft.util.EnumFacing;
+
+import com.github.bsideup.jabel.Desugar;
 
 @Desugar
 public record BlockPos(int x, int y, int z) {
@@ -11,7 +12,11 @@ public record BlockPos(int x, int y, int z) {
     }
 
     public BlockPos offset(EnumFacing facing, int n) {
-        return n == 0 ? this : new BlockPos(this.x + facing.getFrontOffsetX() * n, this.y + facing.getFrontOffsetY() * n, this.z + facing.getFrontOffsetZ() * n);
+        return n == 0 ? this
+            : new BlockPos(
+                this.x + facing.getFrontOffsetX() * n,
+                this.y + facing.getFrontOffsetY() * n,
+                this.z + facing.getFrontOffsetZ() * n);
     }
 
     public boolean equals(int x, int y, int z) {

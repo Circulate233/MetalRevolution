@@ -1,12 +1,15 @@
 package com.circulation.metal_revolution.mixins.MMM.block;
 
-import com.circulation.metal_revolution.interfaces.MRNeighborsTile;
-import com.circulation.metal_revolution.utils.BlockPos;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
+
 import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
+
+import com.circulation.metal_revolution.interfaces.MRNeighborsTile;
+import com.circulation.metal_revolution.utils.BlockPos;
+
 import project.studio.manametalmod.blocks.BlockTileEntityMetalCraftTable;
 import project.studio.manametalmod.blocks.api.BlockContainer;
 

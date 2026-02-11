@@ -1,11 +1,12 @@
 package com.circulation.metal_revolution.common;
 
 import net.minecraft.item.ItemStack;
+
 import project.studio.manametalmod.tileentity.TileEntityCrystalPillars;
 
 public class MRTileEntityCrystalPillars extends TileEntityCrystalPillars {
 
-    private static final int[] allSlot = {0};
+    private static final int[] allSlot = { 0 };
 
     public int[] getAccessibleSlotsFromSide(int side) {
         return allSlot;

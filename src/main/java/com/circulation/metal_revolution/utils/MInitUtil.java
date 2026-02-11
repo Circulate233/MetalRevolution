@@ -1,8 +1,9 @@
 package com.circulation.metal_revolution.utils;
 
+import net.minecraft.item.Item;
+
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
-import net.minecraft.item.Item;
 import project.studio.manametalmod.ManaMetalMod;
 import project.studio.manametalmod.itemAndBlockCraft.ItemCraft10;
 

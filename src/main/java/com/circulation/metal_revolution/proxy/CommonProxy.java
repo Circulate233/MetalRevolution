@@ -1,5 +1,7 @@
 package com.circulation.metal_revolution.proxy;
 
+import net.minecraft.tileentity.TileEntity;
+
 import com.circulation.metal_revolution.common.MRTileEntityCheeseMaker;
 import com.circulation.metal_revolution.common.MRTileEntityCrystalPillars;
 import com.circulation.metal_revolution.common.MRTileEntityGilded;
@@ -7,16 +9,19 @@ import com.circulation.metal_revolution.common.MRTileEntityManaMetalInjection;
 import com.circulation.metal_revolution.common.MRTileEntityMetalSeparator;
 import com.circulation.metal_revolution.utils.MInitUtil;
 import com.github.bsideup.jabel.Desugar;
+
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.tileentity.TileEntity;
 
 public class CommonProxy {
 
     public static void registerTileEntity(Class<? extends TileEntity> aCalss) {
-        GameRegistry.registerTileEntity(aCalss, aCalss.getSimpleName().toLowerCase());
+        GameRegistry.registerTileEntity(
+            aCalss,
+            aCalss.getSimpleName()
+                .toLowerCase());
     }
 
     public void preInit(FMLPreInitializationEvent event) {

@@ -1,13 +1,14 @@
 package com.circulation.metal_revolution.common;
 
-import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+
+import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import project.studio.manametalmod.tileentity.TileEntityCheeseMaker;
 
 public class MRTileEntityCheeseMaker extends TileEntityCheeseMaker {
 
-    private static final int[] AllSlot = {0, 1, 2};
+    private static final int[] AllSlot = { 0, 1, 2 };
 
     private static final Reference2BooleanFunction<ItemStack>[] inputValid = new Reference2BooleanFunction[AllSlot.length];
     private static final Reference2BooleanFunction<ItemStack>[] outputValid = new Reference2BooleanFunction[AllSlot.length];

@@ -2,16 +2,18 @@ package com.circulation.metal_revolution.mixins.MMM.tile;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
+
 import project.studio.manametalmod.dark_magic.TileEntityDarkSteelFurnace;
 
 @Mixin(TileEntityDarkSteelFurnace.class)
 public class MixinDarkSteelFurnace {
 
     @Unique
-    private static final int[] m$AllSlot = {0, 1};
+    private static final int[] m$AllSlot = { 0, 1 };
 
     /**
      * @author circulation
@@ -28,7 +30,8 @@ public class MixinDarkSteelFurnace {
      */
     @Overwrite
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
-        return slot == 0 && FurnaceRecipes.smelting().getSmeltingResult(stack) != null;
+        return slot == 0 && FurnaceRecipes.smelting()
+            .getSmeltingResult(stack) != null;
     }
 
     /**

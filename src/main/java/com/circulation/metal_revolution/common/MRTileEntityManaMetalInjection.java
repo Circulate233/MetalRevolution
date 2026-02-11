@@ -1,11 +1,12 @@
 package com.circulation.metal_revolution.common;
 
 import net.minecraft.item.ItemStack;
+
 import project.studio.manametalmod.tileentity.TileEntityManaMetalInjection;
 
 public class MRTileEntityManaMetalInjection extends TileEntityManaMetalInjection {
 
-    private static final int[] m$AllSlot = {0};
+    private static final int[] m$AllSlot = { 0 };
 
     @Override
     public int[] getAccessibleSlotsFromSide(int side) {

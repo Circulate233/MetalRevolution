@@ -1,10 +1,10 @@
 package com.circulation.metal_revolution.mixins.MMM.recipe.crafting;
 
-import it.unimi.dsi.fastutil.objects.Reference2FloatMap;
-import it.unimi.dsi.fastutil.objects.Reference2FloatOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
+import java.util.Map;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -12,9 +12,11 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import project.studio.manametalmod.items.crafting.IronWroughtSteelFRecipes;
 
-import java.util.Map;
+import it.unimi.dsi.fastutil.objects.Reference2FloatMap;
+import it.unimi.dsi.fastutil.objects.Reference2FloatOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
+import project.studio.manametalmod.items.crafting.IronWroughtSteelFRecipes;
 
 @SuppressWarnings("rawtypes")
 @Mixin(value = IronWroughtSteelFRecipes.class, remap = false)
@@ -40,7 +42,8 @@ public abstract class MixinIronWroughtSteelFRecipes {
         if (experienceList instanceof Reference2FloatOpenHashMap) {
             return (Reference2FloatOpenHashMap<ItemStack>) experienceList;
         } else {
-            return (Reference2FloatOpenHashMap<ItemStack>) (experienceList = new Reference2FloatOpenHashMap<ItemStack>(experienceList));
+            return (Reference2FloatOpenHashMap<ItemStack>) (experienceList = new Reference2FloatOpenHashMap<ItemStack>(
+                experienceList));
         }
     }
 

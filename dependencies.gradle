@@ -1,0 +1,17 @@
+dependencies {
+    implementation('com.github.GTNewHorizons:AE2FluidCraft-Rework:1.4.120-gtnh:dev') {
+        exclude group: 'com.github.GTNewHorizons', module: 'Applied-Energistics-2-Unofficial'
+    }
+    api('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-695-GTNH:dev')
+    runtimeOnly("com.github.GTNewHorizons:NotEnoughEnergistics:1.7.14:dev")
+    implementation('com.github.GTNewHorizons:GTNHLib:0.7.10:dev')
+    implementation(rfg.deobf("curse.maven:muya1-7-10-530214:4364097"))
+    implementation(rfg.deobf("curse.maven:manametal-531708:7337398"))
+    implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.7:dev")
+    implementation("com.github.GTNewHorizons:NotEnoughItems:2.8.44-GTNH:dev")
+    implementation(rfg.deobf("curse.maven:smooth-285742:2614474"))
+    implementation(rfg.deobf("curse.maven:trivialthoughts-967327:7603585"))
+
+    runtimeOnlyNonPublishable('com.github.GTNewHorizons:ServerUtilities:2.2.2:dev')
+    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:spark-361579:4271867"))
+}

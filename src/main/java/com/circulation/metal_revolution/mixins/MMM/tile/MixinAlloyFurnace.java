@@ -1,14 +1,12 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
-import com.circulation.metal_revolution.utils.SimpleItem;
-import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
-import it.unimi.dsi.fastutil.objects.Reference2ObjectMap;
-import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
-import it.unimi.dsi.fastutil.objects.ReferenceSets;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,16 +14,22 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.circulation.metal_revolution.utils.SimpleItem;
+
+import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectMap;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
+import it.unimi.dsi.fastutil.objects.ReferenceSets;
 import project.studio.manametalmod.items.crafting.AlloyFurnaceRecipes;
 import project.studio.manametalmod.tileentity.TileEntityAlloyFurnace;
-
-import java.util.Set;
 
 @Mixin(TileEntityAlloyFurnace.class)
 public abstract class MixinAlloyFurnace {
 
     @Unique
-    private static final int[] m$AllSlot = {0, 1, 2, 3, 4};
+    private static final int[] m$AllSlot = { 0, 1, 2, 3, 4 };
     @Unique
     private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
     @Shadow(remap = false)
@@ -57,9 +61,9 @@ public abstract class MixinAlloyFurnace {
             imp.add(s2);
 
             rimp1.computeIfAbsent(s1, ss -> new ReferenceOpenHashSet<>())
-                 .add(s2);
+                .add(s2);
             rimp2.computeIfAbsent(s2, ss -> new ReferenceOpenHashSet<>())
-                 .add(s1);
+                .add(s1);
         }
         m$imp = imp;
         m$rimp1 = rimp1;
@@ -114,14 +118,13 @@ public abstract class MixinAlloyFurnace {
     }
 
     @Unique
-    public boolean m$isItemRecipe1(@NotNull ItemStack item) {
+    public boolean m$isItemRecipe1(@Nonnull ItemStack item) {
         if (this.inventory == null) return false;
         if (this.inventory[4] != null) {
             if (m$rimp2 == null) {
                 m$initRecipe();
             }
-            return m$rimp2
-                .getOrDefault(SimpleItem.getNoNBTInstance(this.inventory[4]), ReferenceSets.emptySet())
+            return m$rimp2.getOrDefault(SimpleItem.getNoNBTInstance(this.inventory[4]), ReferenceSets.emptySet())
                 .contains(SimpleItem.getNoNBTInstance(item));
         }
         if (m$imp == null) {
@@ -131,14 +134,13 @@ public abstract class MixinAlloyFurnace {
     }
 
     @Unique
-    public boolean m$isItemRecipe2(@NotNull ItemStack item) {
+    public boolean m$isItemRecipe2(@Nonnull ItemStack item) {
         if (this.inventory == null) return false;
         if (this.inventory[0] != null) {
             if (m$rimp1 == null) {
                 m$initRecipe();
             }
-            return m$rimp1
-                .getOrDefault(SimpleItem.getNoNBTInstance(this.inventory[0]), ReferenceSets.emptySet())
+            return m$rimp1.getOrDefault(SimpleItem.getNoNBTInstance(this.inventory[0]), ReferenceSets.emptySet())
                 .contains(SimpleItem.getNoNBTInstance(item));
         }
         if (m$imp == null) {

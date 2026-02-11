@@ -1,9 +1,9 @@
 package com.circulation.metal_revolution.utils;
 
+import java.util.Objects;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-
-import java.util.Objects;
 
 public class IInventoryUtils {
 

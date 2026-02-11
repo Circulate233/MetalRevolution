@@ -1,16 +1,18 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
 import net.minecraft.item.ItemStack;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
+
 import project.studio.manametalmod.tileentity.TileEntityManaCraftTable;
 
 @Mixin(TileEntityManaCraftTable.class)
 public class MixinManaCraftTable {
 
     @Unique
-    private static final int[] m$AllSlot = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    private static final int[] m$AllSlot = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
     /**
      * @author circulation
