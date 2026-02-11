@@ -51,10 +51,10 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
     @Unique
     private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp2;
     @Unique
-    private final Object2ObjectFunction<String, Reference2BooleanFunction<ItemStack>[]> r$function = _ -> {
+    private final Object2ObjectFunction<String, Reference2BooleanFunction<ItemStack>[]> r$function = o -> {
         var valid = new Reference2BooleanFunction[m$AllSlot.length];
         valid[0] = item -> this.m$isItemRecipe1((ItemStack) item);
-        valid[1] = _ -> false;
+        valid[1] = a -> false;
         valid[2] = item -> this.isOKFuel((ItemStack) item);
         valid[3] = item -> this.m$isItemRecipe2((ItemStack) item);
         return valid;
@@ -90,13 +90,13 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
                 for (ItemStack stack : list1) {
                     var s = SimpleItem.getNoNBTInstance(stack);
                     imp1.add(s);
-                    var set = rimp1.computeIfAbsent(s, _ -> new ReferenceOpenHashSet<>());
+                    var set = rimp1.computeIfAbsent(s, o -> new ReferenceOpenHashSet<>());
                     list2.forEach(i -> set.add(SimpleItem.getNoNBTInstance(i)));
                 }
                 for (ItemStack stack : list2) {
                     var s = SimpleItem.getNoNBTInstance(stack);
                     imp2.add(s);
-                    var set = rimp2.computeIfAbsent(s, _ -> new ReferenceOpenHashSet<>());
+                    var set = rimp2.computeIfAbsent(s, o -> new ReferenceOpenHashSet<>());
                     list1.forEach(i -> set.add(SimpleItem.getNoNBTInstance(i)));
                 }
             }
