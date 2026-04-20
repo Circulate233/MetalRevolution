@@ -1,8 +1,6 @@
 package com.circulation.metal_revolution.mixins.MMM.tile;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -15,17 +13,6 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import com.circulation.metal_revolution.utils.SimpleItem;
-
-import it.unimi.dsi.fastutil.Pair;
-import it.unimi.dsi.fastutil.objects.Object2ObjectFunction;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
-import it.unimi.dsi.fastutil.objects.Reference2ObjectMap;
-import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
-import it.unimi.dsi.fastutil.objects.ReferenceReferenceMutablePair;
-import it.unimi.dsi.fastutil.objects.ReferenceSets;
 import project.studio.manametalmod.core.RecipeOre;
 import project.studio.manametalmod.tileentity.TileEntityBase;
 
@@ -33,138 +20,172 @@ import project.studio.manametalmod.tileentity.TileEntityBase;
 public abstract class MixinTileEntityBase extends TileEntity implements ISidedInventory {
 
     @Unique
-    private static final int[] m$AllSlot = { 0, 1, 2, 3 };
-    @Unique
-    private final static Map<String, Reference2BooleanFunction<ItemStack>[]> m$valids = new Object2ObjectOpenHashMap<>();
+    private static final int[] m$ALL_SLOTS = { 0, 1, 2, 3 };
+
     @Shadow
     public List<RecipeOre> recipe;
+
     @Shadow
     public ItemStack[] items;
+
     @Shadow
     public String TileName;
-    @Unique
-    private Pair<List<RecipeOre>, Set<SimpleItem>> m$imp1;
-    @Unique
-    private Pair<List<RecipeOre>, Set<SimpleItem>> m$imp2;
-    @Unique
-    private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp1;
-    @Unique
-    private Reference2ObjectMap<SimpleItem, Set<SimpleItem>> m$rimp2;
-    @Unique
-    private final Object2ObjectFunction<String, Reference2BooleanFunction<ItemStack>[]> r$function = o -> {
-        var valid = new Reference2BooleanFunction[m$AllSlot.length];
-        valid[0] = item -> this.m$isItemRecipe1((ItemStack) item);
-        valid[1] = a -> false;
-        valid[2] = item -> this.isOKFuel((ItemStack) item);
-        valid[3] = item -> this.m$isItemRecipe2((ItemStack) item);
-        return valid;
-    };
 
     @Shadow
     public abstract boolean isOKFuel(ItemStack item);
 
-    @Unique
-    private void m$initRecipe() {
-        if (this.recipe != null) {
-            Set<SimpleItem> imp1;
-            Set<SimpleItem> imp2;
-            if (m$imp1 == null || m$imp2 == null) {
-                imp1 = new ReferenceOpenHashSet<>();
-                imp2 = new ReferenceOpenHashSet<>();
-                m$imp1 = ReferenceReferenceMutablePair.of(this.recipe, imp1);
-                m$imp2 = ReferenceReferenceMutablePair.of(this.recipe, imp2);
-            } else {
-                (imp1 = m$imp1.right()).clear();
-                (imp2 = m$imp2.right()).clear();
-                m$imp1.left(this.recipe);
-                m$imp2.left(this.recipe);
-            }
-            Reference2ObjectMap<SimpleItem, Set<SimpleItem>> rimp1 = new Reference2ObjectOpenHashMap<>();
-            Reference2ObjectMap<SimpleItem, Set<SimpleItem>> rimp2 = new Reference2ObjectOpenHashMap<>();
-
-            for (RecipeOre recipeOre : this.recipe) {
-                var list1 = recipeOre.getImp1()
-                    .getItem();
-                var list2 = recipeOre.getImp2()
-                    .getItem();
-                for (ItemStack stack : list1) {
-                    var s = SimpleItem.getNoNBTInstance(stack);
-                    imp1.add(s);
-                    var set = rimp1.computeIfAbsent(s, o -> new ReferenceOpenHashSet<>());
-                    list2.forEach(i -> set.add(SimpleItem.getNoNBTInstance(i)));
-                }
-                for (ItemStack stack : list2) {
-                    var s = SimpleItem.getNoNBTInstance(stack);
-                    imp2.add(s);
-                    var set = rimp2.computeIfAbsent(s, o -> new ReferenceOpenHashSet<>());
-                    list1.forEach(i -> set.add(SimpleItem.getNoNBTInstance(i)));
-                }
-            }
-
-            m$rimp1 = rimp1;
-            m$rimp2 = rimp2;
-        }
-    }
-
     /**
      * @author circulation
-     * @reason 覆写
+     * @reason 开放全部槽位给自动化访问
      */
-    @Overwrite(remap = true)
+    @Overwrite(remap = false)
     public int[] getAccessibleSlotsFromSide(int side) {
-        return m$AllSlot;
+        return m$ALL_SLOTS;
     }
 
     /**
      * @author circulation
-     * @reason 覆写
+     * @reason 手动放入判定
      */
-    @Overwrite(remap = true)
+    @Overwrite(remap = false)
+    public boolean isItemValidForSlot(int slot, ItemStack stack) {
+        if (stack == null) return false;
+
+        switch (slot) {
+            case 0:
+                return this.m$isItemRecipe1Loose(stack);
+            case 1:
+                return false;
+            case 2:
+                // 手动时仍允许燃料进入 2 槽，避免“完全放不进去”
+                return this.isOKFuel(stack);
+            case 3:
+                return this.m$isItemRecipe2Loose(stack);
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * @author circulation
+     * @reason 自动化插入判定：优先配方槽，只有纯燃料才进 2 槽
+     */
+    @Overwrite(remap = false)
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
-        return m$valids.computeIfAbsent(this.TileName, r$function)[slot].getBoolean(stack);
+        if (stack == null) return false;
+
+        switch (slot) {
+            case 0:
+                return this.m$isItemRecipe1Loose(stack);
+            case 1:
+                return false;
+            case 2:
+                return this.isOKFuel(stack) && !this.m$isItemRecipe1Loose(stack) && !this.m$isItemRecipe2Loose(stack);
+            case 3:
+                return this.m$isItemRecipe2Loose(stack);
+            default:
+                return false;
+        }
     }
 
     @Unique
-    public boolean m$isItemRecipe1(@Nonnull ItemStack item) {
-        if (this.items == null) return false;
-        if (this.items[3] != null) {
-            if (m$rimp2 == null) {
-                m$initRecipe();
-            }
-            if (m$imp2 == null) return false;
-            return m$rimp2.getOrDefault(SimpleItem.getNoNBTInstance(this.items[3]), ReferenceSets.emptySet())
-                .contains(SimpleItem.getNoNBTInstance(item));
+    private boolean m$stackMatchesNoNBT(ItemStack a, ItemStack b) {
+        if (a == null || b == null) return false;
+        if (a.getItem() != b.getItem()) return false;
+
+        int da = a.getItemDamage();
+        int db = b.getItemDamage();
+
+        // 兼容 wildcard meta
+        return da == db || da == 32767 || db == 32767;
+    }
+
+    @Unique
+    private String m$debugStack(ItemStack stack) {
+        if (stack == null) return "null";
+        return String.valueOf(stack.getItem()) + " meta="
+            + stack.getItemDamage()
+            + " size="
+            + stack.stackSize
+            + " nbt="
+            + stack.getTagCompound();
+    }
+
+    @Unique
+    public boolean m$isItemRecipe1Loose(@Nonnull ItemStack item) {
+        if (item == null || this.items == null || this.recipe == null) {
+            return false;
         }
-        if (this.recipe != null) {
-            if (m$imp1 == null || m$imp1.left() != this.recipe) {
-                m$initRecipe();
+
+        for (RecipeOre recipeOre : this.recipe) {
+            List<ItemStack> list1 = recipeOre.getImp1()
+                .getItem();
+            List<ItemStack> list2 = recipeOre.getImp2()
+                .getItem();
+
+            boolean matchSelf = false;
+            if (list1 != null) {
+                for (ItemStack s1 : list1) {
+                    if (m$stackMatchesNoNBT(s1, item)) {
+                        matchSelf = true;
+                        break;
+                    }
+                }
             }
-            if (m$imp1 == null) return false;
-            return m$imp1.right()
-                .contains(SimpleItem.getNoNBTInstance(item));
+
+            if (!matchSelf) continue;
+
+            // 如果 3 槽已有物品，则要求当前物品能与其配对
+            if (this.items[3] != null) {
+                if (list2 != null) {
+                    for (ItemStack s2 : list2) {
+                        if (m$stackMatchesNoNBT(s2, this.items[3])) {
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                return true;
+            }
         }
 
         return false;
     }
 
     @Unique
-    public boolean m$isItemRecipe2(@Nonnull ItemStack item) {
-        if (this.items == null) return false;
-        if (this.items[0] != null) {
-            if (m$rimp1 == null) {
-                m$initRecipe();
-            }
-            if (m$imp1 == null) return false;
-            return m$rimp1.getOrDefault(SimpleItem.getNoNBTInstance(this.items[0]), ReferenceSets.emptySet())
-                .contains(SimpleItem.getNoNBTInstance(item));
+    public boolean m$isItemRecipe2Loose(@Nonnull ItemStack item) {
+        if (item == null || this.items == null || this.recipe == null) {
+            return false;
         }
-        if (this.recipe != null) {
-            if (m$imp2 == null || m$imp2.left() != this.recipe) {
-                m$initRecipe();
+
+        for (RecipeOre recipeOre : this.recipe) {
+            List<ItemStack> list1 = recipeOre.getImp1()
+                .getItem();
+            List<ItemStack> list2 = recipeOre.getImp2()
+                .getItem();
+
+            boolean matchSelf = false;
+            if (list2 != null) {
+                for (ItemStack s2 : list2) {
+                    if (m$stackMatchesNoNBT(s2, item)) {
+                        matchSelf = true;
+                        break;
+                    }
+                }
             }
-            if (m$imp2 == null) return false;
-            return m$imp2.right()
-                .contains(SimpleItem.getNoNBTInstance(item));
+
+            if (!matchSelf) continue;
+            if (this.items[0] != null) {
+                if (list1 != null) {
+                    for (ItemStack s1 : list1) {
+                        if (m$stackMatchesNoNBT(s1, this.items[0])) {
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                return true;
+            }
         }
 
         return false;
