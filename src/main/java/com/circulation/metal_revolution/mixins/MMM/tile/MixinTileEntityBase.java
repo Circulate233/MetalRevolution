@@ -21,15 +21,10 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
 
     @Unique
     private static final int[] m$ALL_SLOTS = { 0, 1, 2, 3 };
-
     @Shadow
     public List<RecipeOre> recipe;
-
     @Shadow
     public ItemStack[] items;
-
-    @Shadow
-    public String TileName;
 
     @Shadow
     public abstract boolean isOKFuel(ItemStack item);
@@ -51,19 +46,14 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
         if (stack == null) return false;
 
-        switch (slot) {
-            case 0:
-                return this.m$isItemRecipe1Loose(stack);
-            case 1:
-                return false;
-            case 2:
+        return switch (slot) {
+            case 0 -> this.m$isItemRecipe1Loose(stack);
+            case 2 ->
                 // 手动时仍允许燃料进入 2 槽，避免“完全放不进去”
-                return this.isOKFuel(stack);
-            case 3:
-                return this.m$isItemRecipe2Loose(stack);
-            default:
-                return false;
-        }
+                this.isOKFuel(stack);
+            case 3 -> this.m$isItemRecipe2Loose(stack);
+            default -> false;
+        };
     }
 
     /**
@@ -74,18 +64,12 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
         if (stack == null) return false;
 
-        switch (slot) {
-            case 0:
-                return this.m$isItemRecipe1Loose(stack);
-            case 1:
-                return false;
-            case 2:
-                return this.isOKFuel(stack) && !this.m$isItemRecipe1Loose(stack) && !this.m$isItemRecipe2Loose(stack);
-            case 3:
-                return this.m$isItemRecipe2Loose(stack);
-            default:
-                return false;
-        }
+        return switch (slot) {
+            case 0 -> this.m$isItemRecipe1Loose(stack);
+            case 2 -> this.isOKFuel(stack) && !this.m$isItemRecipe1Loose(stack) && !this.m$isItemRecipe2Loose(stack);
+            case 3 -> this.m$isItemRecipe2Loose(stack);
+            default -> false;
+        };
     }
 
     @Unique
@@ -96,14 +80,13 @@ public abstract class MixinTileEntityBase extends TileEntity implements ISidedIn
         int da = a.getItemDamage();
         int db = b.getItemDamage();
 
-        // 兼容 wildcard meta
         return da == db || da == 32767 || db == 32767;
     }
 
     @Unique
     private String m$debugStack(ItemStack stack) {
         if (stack == null) return "null";
-        return String.valueOf(stack.getItem()) + " meta="
+        return stack.getItem() + " meta="
             + stack.getItemDamage()
             + " size="
             + stack.stackSize
