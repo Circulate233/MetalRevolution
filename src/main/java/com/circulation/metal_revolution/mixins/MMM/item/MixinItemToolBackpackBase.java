@@ -1,5 +1,8 @@
 package com.circulation.metal_revolution.mixins.MMM.item;
 
+import com.circulation.metal_revolution.utils.IInventoryUtils;
+import com.circulation.metal_revolution.utils.TagUtils;
+import cpw.mods.fml.common.Loader;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -9,7 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
 import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,18 +19,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.circulation.metal_revolution.utils.IInventoryUtils;
-import com.circulation.metal_revolution.utils.TagUtils;
-
-import appeng.api.config.Actionable;
-import appeng.api.networking.security.PlayerSource;
-import appeng.api.networking.storage.IStorageGrid;
-import appeng.api.storage.data.IAEItemStack;
-import appeng.tile.misc.TileInterface;
-import appeng.util.item.AEItemStack;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Optional;
 import project.studio.manametalmod.items.ItemToolBackpackBase;
 import project.studio.manametalmod.items.ItemToolBackpackManaItem;
 
@@ -63,7 +53,7 @@ public abstract class MixinItemToolBackpackBase extends Item {
         TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof IInventory inv) {
             var bagInv = m$getInventory(stack);
-            if (Loader.isModLoaded("appliedenergistics2") && m$tryMoveItemsToAE(te, bagInv, player)) {
+            if (Loader.isModLoaded("appliedenergistics2") && IInventoryUtils.tryMoveItemsToAE(te, bagInv, player)) {
                 this.m$saveInventory(stack, bagInv);
                 return true;
             }
@@ -84,32 +74,6 @@ public abstract class MixinItemToolBackpackBase extends Item {
             return true;
         }
         return false;
-    }
-
-    @Unique
-    @Optional.Method(modid = "appliedenergistics2")
-    private boolean m$tryMoveItemsToAE(TileEntity te, IInventory bagInv, EntityPlayer player) {
-        if (!(te instanceof TileInterface ae)) return false;
-        final var node = ae.getActionableNode();
-        if (node == null) return false;
-        final var grid = node.getGrid();
-        if (grid == null) return false;
-        IStorageGrid storageGrid = grid.getCache(IStorageGrid.class);
-        if (storageGrid == null) return false;
-        final var s = storageGrid.getItemInventory();
-        final var source = new PlayerSource(player, ae);
-        for (int slot = 0; slot < bagInv.getSizeInventory(); slot++) {
-            final var item = bagInv.getStackInSlot(slot);
-            if (item == null) continue;
-            IAEItemStack aeItem = AEItemStack.create(item);
-            aeItem = s.injectItems(aeItem, Actionable.MODULATE, source);
-            if (aeItem == null) {
-                bagInv.setInventorySlotContents(slot, null);
-            } else if (bagInv.getStackInSlot(slot).stackSize != aeItem.getStackSize()) {
-                bagInv.getStackInSlot(slot).stackSize = (int) aeItem.getStackSize();
-            }
-        }
-        return true;
     }
 
     @Unique

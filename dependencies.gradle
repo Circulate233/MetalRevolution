@@ -6,7 +6,7 @@ dependencies {
     runtimeOnly("com.github.GTNewHorizons:NotEnoughEnergistics:1.7.14:dev")
     implementation('com.github.GTNewHorizons:GTNHLib:0.7.10:dev')
     implementation(rfg.deobf("curse.maven:muya1-7-10-530214:4364097"))
-    implementation(rfg.deobf("curse.maven:manametal-531708:7607858"))
+    implementation(rfg.deobf("curse.maven:manametal-531708:8057127"))
     implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.7:dev")
     implementation("com.github.GTNewHorizons:NotEnoughItems:2.8.44-GTNH:dev")
     implementation(rfg.deobf("curse.maven:smooth-285742:2614474"))

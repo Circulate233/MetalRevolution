@@ -1,9 +1,18 @@
 package com.circulation.metal_revolution.utils;
 
-import java.util.Objects;
-
+import appeng.api.config.Actionable;
+import appeng.api.networking.security.PlayerSource;
+import appeng.api.networking.storage.IStorageGrid;
+import appeng.api.storage.data.IAEItemStack;
+import appeng.tile.misc.TileInterface;
+import appeng.util.item.AEItemStack;
+import cpw.mods.fml.common.Optional;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+
+import java.util.Objects;
 
 public class IInventoryUtils {
 
@@ -97,5 +106,30 @@ public class IInventoryUtils {
             inv.markDirty();
             return decrStackSize;
         }
+    }
+
+    @Optional.Method(modid = "appliedenergistics2")
+    public static boolean tryMoveItemsToAE(TileEntity te, IInventory bagInv, EntityPlayer player) {
+        if (!(te instanceof TileInterface ae)) return false;
+        final var node = ae.getActionableNode();
+        if (node == null) return false;
+        final var grid = node.getGrid();
+        if (grid == null) return false;
+        IStorageGrid storageGrid = grid.getCache(IStorageGrid.class);
+        if (storageGrid == null) return false;
+        final var s = storageGrid.getItemInventory();
+        final var source = new PlayerSource(player, ae);
+        for (int slot = 0; slot < bagInv.getSizeInventory(); slot++) {
+            final var item = bagInv.getStackInSlot(slot);
+            if (item == null) continue;
+            IAEItemStack aeItem = AEItemStack.create(item);
+            aeItem = s.injectItems(aeItem, Actionable.MODULATE, source);
+            if (aeItem == null) {
+                bagInv.setInventorySlotContents(slot, null);
+            } else if (bagInv.getStackInSlot(slot).stackSize != aeItem.getStackSize()) {
+                bagInv.getStackInSlot(slot).stackSize = (int) aeItem.getStackSize();
+            }
+        }
+        return true;
     }
 }
