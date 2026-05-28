@@ -1,8 +1,5 @@
 package com.circulation.metal_revolution.mixins.MMM.item;
 
-import com.circulation.metal_revolution.utils.IInventoryUtils;
-import com.circulation.metal_revolution.utils.TagUtils;
-import cpw.mods.fml.common.Loader;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -12,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,6 +17,11 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.circulation.metal_revolution.utils.IInventoryUtils;
+import com.circulation.metal_revolution.utils.TagUtils;
+
+import cpw.mods.fml.common.Loader;
 import project.studio.manametalmod.items.ItemToolBackpackBase;
 import project.studio.manametalmod.items.ItemToolBackpackManaItem;
 

@@ -1,5 +1,12 @@
 package com.circulation.metal_revolution.utils;
 
+import java.util.Objects;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+
 import appeng.api.config.Actionable;
 import appeng.api.networking.security.PlayerSource;
 import appeng.api.networking.storage.IStorageGrid;
@@ -7,12 +14,6 @@ import appeng.api.storage.data.IAEItemStack;
 import appeng.tile.misc.TileInterface;
 import appeng.util.item.AEItemStack;
 import cpw.mods.fml.common.Optional;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-
-import java.util.Objects;
 
 public class IInventoryUtils {
 
