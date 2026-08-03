@@ -11,6 +11,9 @@ repositories {
         url = uri("https://maven.aliyun.com/nexus/content/repositories/jcenter")
     }
     maven {
+        url = uri("https://nexus.jsdu.cn")
+    }
+    maven {
         url = uri("https://maven.cleanroommc.com")
     }
     maven {
