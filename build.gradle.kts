@@ -3,6 +3,10 @@ plugins {
     id("com.gtnewhorizons.gtnhconvention")
 }
 
+minecraft {
+    extraRunJvmArguments.add("-noverify")
+}
+
 dependencies {
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")

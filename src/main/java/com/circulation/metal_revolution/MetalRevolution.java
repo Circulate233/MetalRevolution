@@ -19,7 +19,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
     name = "MetalRevolution",
     version = MetalRevolution.VERSION,
     acceptedMinecraftVersions = "[1.7.10]",
-    dependencies = "required-after:manametalmod@[7.4.5,);" + "required-after:unimixins@[0.1.23,);"
+    dependencies = "required-after:manametalmod@[8.0.2,);" + "required-after:unimixins@[0.1.23,);"
         + "required-after:gtnhlib@[0.6.39,);")
 public class MetalRevolution {
 
