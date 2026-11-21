@@ -19,8 +19,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
     name = "MetalRevolution",
     version = MetalRevolution.VERSION,
     acceptedMinecraftVersions = "[1.7.10]",
-    dependencies = "required-after:manametalmod@[8.0.2,);" + "required-after:unimixins@[0.1.23,);"
-        + "required-after:gtnhlib@[0.6.39,);")
+    dependencies = "required-after:manametalmod@[8.0.2,);required-after:unimixins@[0.1.23,);")
 public class MetalRevolution {
 
     public static final String MOD_ID = "metal_revolution";
