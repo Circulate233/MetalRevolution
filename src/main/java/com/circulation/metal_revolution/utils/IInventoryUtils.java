@@ -26,80 +26,49 @@ public class IInventoryUtils {
     }
 
     public static ItemStack insertItem(IInventory inv, int slot, ItemStack stack, boolean simulate) {
-        if (stack == null) return null;
+        if (stack == null || stack.stackSize <= 0) return null;
 
         ItemStack stackInSlot = inv.getStackInSlot(slot);
         int limit = inv.getInventoryStackLimit();
 
-        int m;
         if (stackInSlot != null) {
             if (stackInSlot.stackSize >= Math.min(stackInSlot.getMaxStackSize(), limit)) return stack;
-
             if (!compareItems(stack, stackInSlot)) return stack;
-
-            if (!inv.isItemValidForSlot(slot, stack)) return stack;
-
-            m = Math.min(stack.getMaxStackSize(), limit) - stackInSlot.stackSize;
-
-            if (stack.stackSize <= m) {
-                if (!simulate) {
-                    ItemStack copy = stack.copy();
-                    copy.stackSize += stackInSlot.stackSize;
-                    inv.setInventorySlotContents(slot, copy);
-                    inv.markDirty();
-                }
-
-                return null;
-            } else {
-                stack = stack.copy();
-                if (!simulate) {
-                    ItemStack copy = stack.splitStack(m);
-                    copy.stackSize += stackInSlot.stackSize;
-                    inv.setInventorySlotContents(slot, copy);
-                    inv.markDirty();
-                } else {
-                    stack.stackSize -= m;
-                }
-                return stack;
-            }
-        } else {
-            if (!inv.isItemValidForSlot(slot, stack)) return stack;
-
-            m = Math.min(stack.getMaxStackSize(), limit);
-            if (m < stack.stackSize) {
-                stack = stack.copy();
-                if (!simulate) {
-                    inv.setInventorySlotContents(slot, stack.splitStack(m));
-                    inv.markDirty();
-                } else {
-                    stack.stackSize -= m;
-                }
-                return stack;
-            } else {
-                if (!simulate) {
-                    inv.setInventorySlotContents(slot, stack);
-                    inv.markDirty();
-                }
-                return null;
-            }
         }
+        if (!inv.isItemValidForSlot(slot, stack)) return stack;
+
+        int available = Math.min(stack.getMaxStackSize(), limit) - (stackInSlot == null ? 0 : stackInSlot.stackSize);
+        if (available <= 0) return stack;
+
+        int inserted = Math.min(stack.stackSize, available);
+        ItemStack remainder = null;
+        if (inserted < stack.stackSize) {
+            remainder = stack.copy();
+            remainder.stackSize -= inserted;
+        }
+        if (!simulate) {
+            ItemStack result = stack;
+            if (stackInSlot != null || remainder != null) {
+                result = stack.copy();
+                result.stackSize = inserted + (stackInSlot == null ? 0 : stackInSlot.stackSize);
+            }
+            inv.setInventorySlotContents(slot, result);
+            inv.markDirty();
+        }
+        return remainder;
     }
 
     public static ItemStack extractItem(IInventory inv, int slot, int amount, boolean simulate) {
-        if (amount == 0) return null;
+        if (amount <= 0) return null;
 
         ItemStack stackInSlot = inv.getStackInSlot(slot);
 
         if (stackInSlot == null) return null;
 
         if (simulate) {
-            if (stackInSlot.stackSize < amount) {
-                return stackInSlot.copy();
-            } else {
-                ItemStack copy = stackInSlot.copy();
-                copy.stackSize = amount;
-                return copy;
-            }
+            ItemStack copy = stackInSlot.copy();
+            copy.stackSize = Math.min(stackInSlot.stackSize, amount);
+            return copy;
         } else {
             int m = Math.min(stackInSlot.stackSize, amount);
 

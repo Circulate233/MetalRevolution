@@ -1,5 +1,5 @@
 {
-  "package": "com.circulation.metal_revolution.mixins.MMM",
+  "package": "com.circulation.metal_revolution.mixins.mmm",
   "refmap": "mixins.metal_revolution.refmap.json",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",

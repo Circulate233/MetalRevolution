@@ -6,7 +6,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import com.circulation.metal_revolution.interfaces.MRMetalSeparator;
 import com.circulation.metal_revolution.utils.MRUtil;
 
-import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import project.studio.manametalmod.MMM;
 import project.studio.manametalmod.ManaMetalMod;
 import project.studio.manametalmod.items.crafting.MetalSeparatorRecipes;
@@ -16,16 +15,6 @@ public class MRTileEntityMetalSeparator extends TileEntityMetalSeparator impleme
 
     private static final int m$maxCacheEnergy = 10000;
     private static final int[] m$AllSlot = { 0, 1, 2, 3 };
-    private static final Reference2BooleanFunction<ItemStack>[] m$valid = new Reference2BooleanFunction[m$AllSlot.length];
-
-    static {
-        m$valid[0] = item -> MetalSeparatorRecipes.smelting()
-            .getSmeltingResult((ItemStack) item) != null;
-        m$valid[1] = item -> MMM.getManaItem((ItemStack) item);
-        m$valid[2] = item -> false;
-        m$valid[3] = item -> false;
-    }
-
     private int m$cacheEnergy = 0;
 
     public MRTileEntityMetalSeparator() {
@@ -78,7 +67,12 @@ public class MRTileEntityMetalSeparator extends TileEntityMetalSeparator impleme
     }
 
     public boolean isItemValidForSlot(int slot, ItemStack item) {
-        return m$valid[slot].getBoolean(item);
+        return switch (slot) {
+            case 0 -> MetalSeparatorRecipes.smelting()
+                .getSmeltingResult(item) != null;
+            case 1 -> MMM.getManaItem(item);
+            default -> false;
+        };
     }
 
     public boolean canExtractItem(int slot, ItemStack item, int side) {

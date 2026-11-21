@@ -3,25 +3,11 @@ package com.circulation.metal_revolution.common;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-import it.unimi.dsi.fastutil.objects.Reference2BooleanFunction;
 import project.studio.manametalmod.tileentity.TileEntityCheeseMaker;
 
 public class MRTileEntityCheeseMaker extends TileEntityCheeseMaker {
 
     private static final int[] AllSlot = { 0, 1, 2 };
-
-    private static final Reference2BooleanFunction<ItemStack>[] inputValid = new Reference2BooleanFunction[AllSlot.length];
-    private static final Reference2BooleanFunction<ItemStack>[] outputValid = new Reference2BooleanFunction[AllSlot.length];
-
-    static {
-        inputValid[0] = item -> item instanceof ItemStack s && s.getItem() == Items.sugar;
-        inputValid[1] = item -> isItemMilk((ItemStack) item);
-        inputValid[2] = item -> false;
-
-        outputValid[0] = item -> false;
-        outputValid[1] = item -> !isItemMilk((ItemStack) item);
-        outputValid[2] = item -> true;
-    }
 
     @Override
     public int getSizeInventory() {
@@ -35,11 +21,19 @@ public class MRTileEntityCheeseMaker extends TileEntityCheeseMaker {
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack item) {
-        return inputValid[slot].getBoolean(item);
+        return switch (slot) {
+            case 0 -> item != null && item.getItem() == Items.sugar;
+            case 1 -> isItemMilk(item);
+            default -> false;
+        };
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack item, int side) {
-        return outputValid[slot].getBoolean(item);
+        return switch (slot) {
+            case 1 -> !isItemMilk(item);
+            case 2 -> true;
+            default -> false;
+        };
     }
 }

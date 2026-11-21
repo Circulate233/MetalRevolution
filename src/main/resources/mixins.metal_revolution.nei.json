@@ -1,5 +1,5 @@
 {
-  "package": "com.circulation.metal_revolution.mixins.MMM.nei",
+  "package": "com.circulation.metal_revolution.mixins.mmm.nei",
   "refmap": "mixins.metal_revolution.refmap.json",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
